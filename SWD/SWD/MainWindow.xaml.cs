@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Data;
+using System.Globalization;
 
 
 
@@ -70,7 +71,7 @@ namespace SWD
                             }
                             double temp;
                             // jeżeli da się rzutować jedno pole z pliku tekstowego na liczbę to wpisz liczbę jak nie to stringa
-                            if (Double.TryParse(l, out temp))
+                            if (Double.TryParse(l, NumberStyles.Any, CultureInfo.InvariantCulture, out temp))
                                 listaKolumn[j].Add(temp);
                             else
                                 listaKolumn[j].Add(l);
@@ -121,7 +122,7 @@ namespace SWD
             for (int i = 0; i < listaKolumn[0].Count; i++)
             {
                 Double temp;
-                Double.TryParse(listaKolumn[wybor.SelectedIndex][i].ToString(), out temp);
+                Double.TryParse(listaKolumn[wybor.SelectedIndex][i].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out temp);
                 cnt += temp;
             }
 
