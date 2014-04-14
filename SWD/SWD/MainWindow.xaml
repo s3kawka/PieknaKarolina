@@ -64,13 +64,13 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="dyskr" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Dyskretyzacja zmiennych rzeczywistych" >
+                            <Button x:Name="dyskr" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Dyskretyzacja zmiennych rzeczywistych" Click="dyskr_Click" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">PRZEDZIAŁ</Label>
+                                    <Label Grid.Row="0" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">PRZEDZIAŁ</Label>
                                     <Image Source="Pictures/b.png" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0"></Image>
                                 </Grid>
                             </Button>
@@ -102,7 +102,7 @@
                         </Border>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <TextBox Name="przedział" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black"></TextBox>
+                        <TextBox Name="przedzial" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black"></TextBox>
                     </Grid>
                 </Grid>
             </Border>

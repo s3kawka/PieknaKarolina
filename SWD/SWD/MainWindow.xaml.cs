@@ -92,9 +92,7 @@ namespace SWD
                                 listaKolumn[j].Add(l);
                             j++;                            
                         }
-                    }
-
-                    
+                    }                   
 
                     //DataTable dane = new DataTable();
 
@@ -167,17 +165,17 @@ namespace SWD
             {
                 text_średnia.Text = srednia() + "";
                 text_mediana.Text = mediana() + "";
-                String[] mm1 = minmax();
-                text_minmax1.Text = mm1[0];
-                text_minmax2.Text = mm1[1];
-                String[] q1 = kwartyle();
-                text_kw1.Text = q1[0];
-                text_kw2.Text = q1[1];
-                String[] p1 = percentyle();
-                text_p1.Text = p1[0];
-                text_p2.Text = p1[1];
-                text_p3.Text = p1[2];
-                text_p4.Text = p1[3];
+                Double[] mm1 = minmax();
+                text_minmax1.Text = mm1[0] + "";
+                text_minmax2.Text = mm1[1] + "";
+                Double[] q1 = kwartyle();
+                text_kw1.Text = q1[0] + "";
+                text_kw2.Text = q1[1] + "";
+                Double[] p1 = percentyle();
+                text_p1.Text = p1[0] + "";
+                text_p2.Text = p1[1] + "";
+                text_p3.Text = p1[2] + "";
+                text_p4.Text = p1[3] + "";
             }
             catch (InvalidCastException ex)
             {
@@ -219,50 +217,87 @@ namespace SWD
             return med;
         }
 
-        public string[] minmax()
+        public Double[] minmax()
         {
-            string[] mm = new string[2];
+            Double[] mm = new Double[2];
             int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
 
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            mm[0] = listaKolumn[wybor.SelectedIndex][0].ToString();
-            mm[1] = listaKolumn[wybor.SelectedIndex][liczba_wierszy - 1].ToString();
+            mm[0] = (Double)listaKolumn[wybor.SelectedIndex][0];
+            mm[1] = (Double)listaKolumn[wybor.SelectedIndex][liczba_wierszy - 1];
 
             return mm;
 
         }
 
-        public string[] kwartyle()
+        public Double[] kwartyle()
         {
 
-            string[] q = new string[2];
+            Double[] q = new Double[2];
             int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
             double a = (double)(liczba_wierszy / 4);
 
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            q[0] = listaKolumn[wybor.SelectedIndex][(int)a].ToString();
-            q[1] = listaKolumn[wybor.SelectedIndex][(int)(a * 3)].ToString();
+            q[0] = (double)listaKolumn[wybor.SelectedIndex][(int)a];
+            q[1] = (double)listaKolumn[wybor.SelectedIndex][(int)(a * 3)];
 
             return q;
         }
 
-        public string[] percentyle()
+        public Double[] percentyle()
         {
 
-            string[] p = new string[4];
+            Double[] p = new Double[4];
             double liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
             double a = liczba_wierszy / (double)100;
 
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            p[0] = listaKolumn[wybor.SelectedIndex][(int)(5 * a)].ToString();
-            p[1] = listaKolumn[wybor.SelectedIndex][(int)(10 * a)].ToString();
-            p[2] = listaKolumn[wybor.SelectedIndex][(int)(90 * a)].ToString();
-            p[3] = listaKolumn[wybor.SelectedIndex][(int)(95 * a)].ToString();
+            p[0] = (double)listaKolumn[wybor.SelectedIndex][(int)(5 * a)];
+            p[1] = (double)listaKolumn[wybor.SelectedIndex][(int)(10 * a)];
+            p[2] = (double)listaKolumn[wybor.SelectedIndex][(int)(90 * a)];
+            p[3] = (double)listaKolumn[wybor.SelectedIndex][(int)(95 * a)];
 
             return p;
+        }
+
+        private void dyskr_Click(object sender, RoutedEventArgs e)
+        {
+            List<Double> kolumna = castToDouble(listaKolumn[wybor.SelectedIndex]);
+            List<Double> outList = new List<Double>();
+            int liczPrzedz = Int32.Parse(przedzial.Text);
+            double dlugosc;
+
+            double[] minMax = minmax();
+            double[] przedzialCur = new double[2];
+            
+            dlugosc = (minMax[1] - minMax[0]) / liczPrzedz;
+
+            przedzialCur[0] = minMax[0];
+            przedzialCur[1] = przedzialCur[0] + dlugosc;
+
+            for (int i = 0; i < liczPrzedz; i++)
+            {
+                przedzialCur[0] += dlugosc;
+                przedzialCur[1] += dlugosc;
+
+                foreach (Double d in kolumna)
+                {
+                    if( d <= przedzialCur[0] && d > przedzialCur[
+                }
+            }
+    
+        }
+
+        private List<Double> castToDouble(List<object> toCast)
+        {
+            List<Double> temp = new List<Double>();
+
+            foreach (object o in toCast)
+                temp.Add((Double)o);
+            return temp;
         }
     }
 }
