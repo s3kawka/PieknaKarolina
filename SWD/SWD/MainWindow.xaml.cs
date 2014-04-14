@@ -19,6 +19,8 @@ namespace SWD
     public partial class MainWindow : Window
     {
         List<List<object>> listaKolumn = new List<List<object>>();
+        DataTable daneTab = new DataTable();
+        String naglowki;
 
         public MainWindow()
         {
@@ -41,9 +43,11 @@ namespace SWD
                 return Text;
             }
         }
-        
+
         private void wgraj_Click(object sender, RoutedEventArgs e)
         {
+            listaKolumn = new List<List<object>>();
+            daneTab = new DataTable();
             try
             {
                 OpenFileDialog dlg = new OpenFileDialog();
@@ -55,17 +59,28 @@ namespace SWD
                 {
                     string filename = dlg.FileName;
                     
+
                     // Wpisanie do naszej listy || Lista list obiektów = mamy na każdą kolumnę jako 
                     // listę typu Object i te kolumny siedzą w liscie listaKolumn, 
                     // jak chcesz się dostać do wiersza 10, w 5 kolumnie to dajesz listaKolumn[5][10]
                     foreach (string k in File.ReadAllLines(filename))
                     {
+                        if (k.StartsWith("#"))
+                            continue;
+                        if (k == "")
+                            continue;
+                        if (k.StartsWith("!"))
+                        {
+                            naglowki = k.TrimStart('!');
+                            continue;
+                        }
+
                         int j = 0;
                         // foreach dla każdego stringa wydzielonego z jednej przeczytaniej linii, stringa dzieli spacja lub przecinek
-                        foreach (string l in k.Split(new char[] { ' ', '\t' }))
+                        foreach (string l in k.Split(new char[] { ' ', '\t' , ';'}))
                         {
                             // dodanie list reprezentujących kolumny, jednorazowo przy pierwszej iteracji
-                            if(listaKolumn.Count < k.Split(new char[] { ' ', '\t' }).Length)
+                            if(listaKolumn.Count < k.Split(new char[] { ' ', '\t', ';' }).Length)
                             {
                                 listaKolumn.Add(new List<object>());
                             }
@@ -79,62 +94,75 @@ namespace SWD
                         }
                     }
 
-                    DataTable dane = new DataTable();
+                    
+
+                    //DataTable dane = new DataTable();
+
+                    if (naglowki != null)
+                    {
+                        int i = 0;
+                        foreach (string l in naglowki.Split(new char[] { ' ', '\t', ';' }))
+                        {                            
+                            double temp;
+                            // Rzutowanie jak przy tworzeniu list, jak liczba to typu double jak nie to String
+                            if (Double.TryParse(listaKolumn[i][0].ToString(), out temp))
+                                daneTab.Columns.Add(l, typeof(Double));
+                            else
+                                daneTab.Columns.Add(l, typeof(String));
+                            i++;
+                        }
+                    }
+                    else
+                        for (int i = 0; i < listaKolumn.Count; i++)
+                        {
+                            double temp;
+                            // Rzutowanie jak przy tworzeniu list, jak liczba to typu double jak nie to String
+                            if (Double.TryParse(listaKolumn[i][0].ToString(), out temp))
+                                daneTab.Columns.Add("Column" + (i + 1), typeof(Double));
+                            else
+                                daneTab.Columns.Add("Column" + (i + 1), typeof(String));
+                        }
 
                     // Stworzenie kolumn w DataTable
-                    for (int i = 0; i < listaKolumn.Count; i++)
-                    {
-                        double temp;
-                        // Rzutowanie jak przy tworzeniu list, jak liczba to typu double jak nie to String
-                        if (Double.TryParse(listaKolumn[i][0].ToString(), out temp))
-                            dane.Columns.Add("Column" + (i + 1), typeof(Double));
-                        else
-                            dane.Columns.Add("Column" + (i + 1), typeof(String));
-                    }
+                    
                     // Wpisanie danych do DataTable pierwszy for po wierszach, wewnętrzny po kolumnach
                     for (int i = 0; i < listaKolumn[0].Count; i++)
                     {
-                        DataRow row = dane.Rows.Add();
+                        DataRow row = daneTab.Rows.Add();
                         for (int j = 0; j < listaKolumn.Count; j++)
                             row[j] = listaKolumn[j][i];
                     }
                     
                     // Zbindowanie danych z DataTable do GridView
-                    blok.ItemsSource = dane.AsDataView();
+                    blok.ItemsSource = daneTab.AsDataView();
 
 
-                    // Wpisanie kolum do listy rozwijanej
-                    for (int i = 0; i < listaKolumn.Count; i++)
-                        wybor.Items.Add(new ItemObject("kolumna" + (i+1), i));
+                    // Wpisanie kolumn do listy rozwijanej
+
+                    if (naglowki != null)
+                    {
+                        int i = 0;
+                        foreach (string l in naglowki.Split(new char[] { ' ', '\t', ';' }))
+                        {
+
+                            wybor.Items.Add(new ItemObject(l, i));
+                            i++;
+                        }
+                    }
+                    else
+                        for (int i = 0; i < listaKolumn.Count; i++)
+                            wybor.Items.Add(new ItemObject("kolumna" + (i + 1), i));
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Niepoprawny plik");
                 throw;
             }
-            
-
         }
 
         private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-
-            text_średnia.Text = srednia() + "";
-            text_mediana.Text = mediana() + "";
-            String[] mm = minmax();
-            text_minmax1.Text = mm[0];
-            text_minmax2.Text = mm[1];
-            String[] q = kwartyle();
-            text_kw1.Text = q[0];
-            text_kw2.Text = q[1];
-            String[] p = percentyle();
-            text_p1.Text = p[0];
-            text_p2.Text = p[1];
-            text_p3.Text = p[2];
-            text_p4.Text = p[3];
-            
-
             try
             {
                 text_średnia.Text = srednia() + "";
@@ -155,8 +183,6 @@ namespace SWD
             {
                 text_średnia.Text = "Nie liczbowa kolumna";
             }
-            
-
         }
 
         public Double srednia()
@@ -185,7 +211,7 @@ namespace SWD
             {
                 med = ((Double)listaKolumn[wybor.SelectedIndex][a - 1] + (Double)listaKolumn[wybor.SelectedIndex][a]) / 2;
             }
-            else 
+            else
             {
                 med = (Double)listaKolumn[wybor.SelectedIndex][a - 1];
             }
@@ -200,9 +226,9 @@ namespace SWD
 
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            mm[0]= listaKolumn[wybor.SelectedIndex][0].ToString();
-            mm[1] = listaKolumn[wybor.SelectedIndex][liczba_wierszy-1].ToString();
-            
+            mm[0] = listaKolumn[wybor.SelectedIndex][0].ToString();
+            mm[1] = listaKolumn[wybor.SelectedIndex][liczba_wierszy - 1].ToString();
+
             return mm;
 
         }
@@ -212,12 +238,12 @@ namespace SWD
 
             string[] q = new string[2];
             int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
-            int a = liczba_wierszy / 4;
-         
+            double a = (double)(liczba_wierszy / 4);
+
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            q[0] = listaKolumn[wybor.SelectedIndex][a].ToString();
-            q[1] = listaKolumn[wybor.SelectedIndex][a*3].ToString();
+            q[0] = listaKolumn[wybor.SelectedIndex][(int)a].ToString();
+            q[1] = listaKolumn[wybor.SelectedIndex][(int)(a * 3)].ToString();
 
             return q;
         }
@@ -226,15 +252,15 @@ namespace SWD
         {
 
             string[] p = new string[4];
-            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
-            int a = liczba_wierszy / 100;
+            double liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+            double a = liczba_wierszy / (double)100;
 
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            p[0] = listaKolumn[wybor.SelectedIndex][5*a].ToString();
-            p[1] = listaKolumn[wybor.SelectedIndex][10*a].ToString();
-            p[2] = listaKolumn[wybor.SelectedIndex][90*a].ToString();
-            p[3] = listaKolumn[wybor.SelectedIndex][95*a].ToString();
+            p[0] = listaKolumn[wybor.SelectedIndex][(int)(5 * a)].ToString();
+            p[1] = listaKolumn[wybor.SelectedIndex][(int)(10 * a)].ToString();
+            p[2] = listaKolumn[wybor.SelectedIndex][(int)(90 * a)].ToString();
+            p[3] = listaKolumn[wybor.SelectedIndex][(int)(95 * a)].ToString();
 
             return p;
         }
