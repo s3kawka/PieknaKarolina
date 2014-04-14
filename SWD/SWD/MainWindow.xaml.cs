@@ -127,6 +127,33 @@ namespace SWD
             }
 
             text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
+            text_mediana.Text = mediana().ToString();
+
+        }
+        public Double mediana()
+        {
+            Double med = 0;
+            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+            int a = liczba_wierszy / 2;
+
+
+            listaKolumn[wybor.SelectedIndex].Sort();
+
+            if (liczba_wierszy % 2 == 0)
+            {
+                Double tmp,tmp2;
+                Double.TryParse(listaKolumn[wybor.SelectedIndex][a-1].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out tmp);
+                Double.TryParse(listaKolumn[wybor.SelectedIndex][a].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out tmp2);
+                med = (tmp + tmp2) / 2;
+            }
+            else 
+            {
+                Double tmp;
+                Double.TryParse(listaKolumn[wybor.SelectedIndex][a-1].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out tmp);
+                med = tmp;
+            }
+
+            return med;
         }
     }
 }
