@@ -61,10 +61,10 @@ namespace SWD
                     {
                         int j = 0;
                         // foreach dla każdego stringa wydzielonego z jednej przeczytaniej linii, stringa dzieli spacja lub przecinek
-                        foreach (string l in k.Split(new char[] { ' ', ',' }))
+                        foreach (string l in k.Split(new char[] { ' ', ',', '\t' }))
                         {
                             // dodanie list reprezentujących kolumny, jednorazowo przy pierwszej iteracji
-                            if(listaKolumn.Count < k.Split(new char[] { ' ', ',' }).Length)
+                            if(listaKolumn.Count < k.Split(new char[] { ' ', ',', '\t' }).Length)
                             {
                                 listaKolumn.Add(new List<object>());
                             }
