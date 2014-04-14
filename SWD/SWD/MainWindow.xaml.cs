@@ -62,10 +62,10 @@ namespace SWD
                     {
                         int j = 0;
                         // foreach dla każdego stringa wydzielonego z jednej przeczytaniej linii, stringa dzieli spacja lub przecinek
-                        foreach (string l in k.Split(new char[] { ' ', ',', '\t' }))
+                        foreach (string l in k.Split(new char[] { ' ', '\t' }))
                         {
                             // dodanie list reprezentujących kolumny, jednorazowo przy pierwszej iteracji
-                            if(listaKolumn.Count < k.Split(new char[] { ' ', ',', '\t' }).Length)
+                            if(listaKolumn.Count < k.Split(new char[] { ' ', '\t' }).Length)
                             {
                                 listaKolumn.Add(new List<object>());
                             }
@@ -118,14 +118,33 @@ namespace SWD
 
         private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             text_średnia.Text = srednia() + "";
             text_mediana.Text = mediana() + "";
-            String[] mm = minmax();
-            text_minmax1.Text = mm[0];
-            text_minmax2.Text = mm[1];
+            //String[] mm = minmax();
+            //text_minmax1.Text = mm[0];
+            //text_minmax2.Text = mm[1];
             String[] q = kwartyle();
             text_kw1.Text = q[0];
             text_kw2.Text = q[1];
+
+            try
+            {
+                text_średnia.Text = srednia() + "";
+                text_mediana.Text = mediana() + "";
+                //String[] mm1 = minmax();
+                //.Text = mm[0];
+                //text_minmax2.Text = mm[1];
+                String[] q1 = kwartyle();
+                text_kw1.Text = q[0];
+                text_kw2.Text = q[1];
+            }
+            catch (InvalidCastException ex)
+            {
+                text_średnia.Text = "Nie liczbowa kolumna";
+            }
+            
+
         }
 
         public Double srednia()
