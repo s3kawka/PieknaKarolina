@@ -128,6 +128,7 @@ namespace SWD
 
             text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
             text_mediana.Text = mediana().ToString();
+            text_minmax.Text = minmax();
 
         }
         public Double mediana()
@@ -154,6 +155,20 @@ namespace SWD
             }
 
             return med;
+        }
+
+        public string minmax()
+        {
+            
+            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+
+            listaKolumn[wybor.SelectedIndex].Sort();
+
+            String min= listaKolumn[wybor.SelectedIndex][0].ToString();
+            String max = listaKolumn[wybor.SelectedIndex][liczba_wierszy-1].ToString();
+            string minmax = min + "/" + max;
+            return minmax;
+
         }
     }
 }
