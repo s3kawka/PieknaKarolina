@@ -128,17 +128,28 @@ namespace SWD
             String[] q = kwartyle();
             text_kw1.Text = q[0];
             text_kw2.Text = q[1];
+            String[] p = percentyle();
+            text_p1.Text = p[0];
+            text_p2.Text = p[1];
+            text_p3.Text = p[2];
+            text_p4.Text = p[3];
+            
 
             try
             {
                 text_średnia.Text = srednia() + "";
                 text_mediana.Text = mediana() + "";
                 String[] mm1 = minmax();
-                text_minmax1.Text = mm[0];
-                text_minmax2.Text = mm[1];
+                text_minmax1.Text = mm1[0];
+                text_minmax2.Text = mm1[1];
                 String[] q1 = kwartyle();
-                text_kw1.Text = q[0];
-                text_kw2.Text = q[1];
+                text_kw1.Text = q1[0];
+                text_kw2.Text = q1[1];
+                String[] p1 = percentyle();
+                text_p1.Text = p1[0];
+                text_p2.Text = p1[1];
+                text_p3.Text = p1[2];
+                text_p4.Text = p1[3];
             }
             catch (InvalidCastException ex)
             {
@@ -209,6 +220,23 @@ namespace SWD
             q[1] = listaKolumn[wybor.SelectedIndex][a*3].ToString();
 
             return q;
+        }
+
+        public string[] percentyle()
+        {
+
+            string[] p = new string[4];
+            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+            int a = liczba_wierszy / 100;
+
+            listaKolumn[wybor.SelectedIndex].Sort();
+
+            p[0] = listaKolumn[wybor.SelectedIndex][5*a].ToString();
+            p[1] = listaKolumn[wybor.SelectedIndex][10*a].ToString();
+            p[2] = listaKolumn[wybor.SelectedIndex][90*a].ToString();
+            p[3] = listaKolumn[wybor.SelectedIndex][95*a].ToString();
+
+            return p;
         }
     }
 }
