@@ -118,23 +118,27 @@ namespace SWD
 
         private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            text_średnia.Text = srednia() + "";
+            text_mediana.Text = mediana() + "";
+            text_minmax.Text = minmax();
+            String[] q = kwartyle();
+            text_kw1.Text = q[0];
+            text_kw2.Text = q[1];
+        }
+
+        public Double srednia()
+        {
             Double cnt = 0;
             for (int i = 0; i < listaKolumn[0].Count; i++)
             {
                 cnt += (Double)listaKolumn[wybor.SelectedIndex][i];
             }
 
-            text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
-<<<<<<< HEAD
-            text_mediana.Text = mediana() + "";
-=======
-            text_mediana.Text = mediana().ToString();
-            text_minmax.Text = minmax();
-            //text_kw1.Text = kawrtyle
-            //text_kw2.Text = kawrtyle
->>>>>>> 5236fbaa8f62afddf38e6399e489151d7c226af5
-
+            cnt = (cnt / listaKolumn[wybor.SelectedIndex].Count);
+            return cnt;
         }
+
+
         public Double mediana()
         {
             Double med = 0;
@@ -170,20 +174,19 @@ namespace SWD
 
         }
 
-        public string kwartyle()
+        public string[] kwartyle()
         {
 
-            string q1, q3;
+            string[] q = new string[2];
             int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
             int a = liczba_wierszy / 4;
          
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            q1 = listaKolumn[wybor.SelectedIndex][a].ToString();
-            q3 = listaKolumn[wybor.SelectedIndex][a*3].ToString();
-            
-            
-            return q1,q2; // O TUTAJ TAM NA GÓRE
+            q[0] = listaKolumn[wybor.SelectedIndex][a].ToString();
+            q[1] = listaKolumn[wybor.SelectedIndex][a*3].ToString();
+
+            return q;
         }
     }
 }
