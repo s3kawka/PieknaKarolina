@@ -120,7 +120,9 @@ namespace SWD
         {
             text_średnia.Text = srednia() + "";
             text_mediana.Text = mediana() + "";
-            text_minmax.Text = minmax();
+            String[] mm = minmax();
+            text_minmax1.Text = mm[0];
+            text_minmax2.Text = mm[1];
             String[] q = kwartyle();
             text_kw1.Text = q[0];
             text_kw2.Text = q[1];
@@ -160,17 +162,17 @@ namespace SWD
             return med;
         }
 
-        public string minmax()
+        public string[] minmax()
         {
-            
+            string[] mm = new string[2];
             int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
 
             listaKolumn[wybor.SelectedIndex].Sort();
 
-            String min= listaKolumn[wybor.SelectedIndex][0].ToString();
-            String max = listaKolumn[wybor.SelectedIndex][liczba_wierszy-1].ToString();
-            string minmax = min + "/" + max;
-            return minmax;
+            mm[0]= listaKolumn[wybor.SelectedIndex][0].ToString();
+            mm[1] = listaKolumn[wybor.SelectedIndex][liczba_wierszy-1].ToString();
+            
+            return mm;
 
         }
 

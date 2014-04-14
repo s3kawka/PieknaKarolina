@@ -199,7 +199,8 @@
 
                     <TextBox Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="4" Margin="1" Name="text_średnia" IsEnabled="False"/>
                     <TextBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" Margin="1" Name="text_mediana" IsEnabled="False"/>
-                    <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="4" Margin="1" Name="text_minmax" IsEnabled="False"/>
+                    <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Margin="1" Name="text_minmax1" IsEnabled="False"/>
+                    <TextBox Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="2" Margin="1" Name="text_minmax2" IsEnabled="False"/>
                     <TextBox Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" Margin="1" Name="text_kw1" IsEnabled="False"/>
                     <TextBox Grid.Column="4" Grid.Row="4" Grid.ColumnSpan="2" Margin="1" Name="text_kw2" IsEnabled="False"/>
                     <TextBox Grid.Column="2" Grid.Row="5" Margin="1" Name="text_p1" IsEnabled="False"/>
