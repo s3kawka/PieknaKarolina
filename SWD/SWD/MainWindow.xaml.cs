@@ -121,13 +121,11 @@ namespace SWD
             Double cnt = 0;
             for (int i = 0; i < listaKolumn[0].Count; i++)
             {
-                Double temp;
-                Double.TryParse(listaKolumn[wybor.SelectedIndex][i].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out temp);
-                cnt += temp;
+                cnt += (Double)listaKolumn[wybor.SelectedIndex][i];
             }
 
             text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
-            text_mediana.Text = mediana().ToString();
+            text_mediana.Text = mediana() + "";
 
         }
         public Double mediana()
@@ -141,16 +139,11 @@ namespace SWD
 
             if (liczba_wierszy % 2 == 0)
             {
-                Double tmp,tmp2;
-                Double.TryParse(listaKolumn[wybor.SelectedIndex][a-1].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out tmp);
-                Double.TryParse(listaKolumn[wybor.SelectedIndex][a].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out tmp2);
-                med = (tmp + tmp2) / 2;
+                med = ((Double)listaKolumn[wybor.SelectedIndex][a - 1] + (Double)listaKolumn[wybor.SelectedIndex][a]) / 2;
             }
             else 
             {
-                Double tmp;
-                Double.TryParse(listaKolumn[wybor.SelectedIndex][a-1].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out tmp);
-                med = tmp;
+                med = (Double)listaKolumn[wybor.SelectedIndex][a - 1];
             }
 
             return med;
