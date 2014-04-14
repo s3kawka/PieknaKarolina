@@ -129,6 +129,8 @@ namespace SWD
             text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
             text_mediana.Text = mediana().ToString();
             text_minmax.Text = minmax();
+            //text_kw1.Text = kawrtyle
+            //text_kw2.Text = kawrtyle
 
         }
         public Double mediana()
@@ -169,6 +171,22 @@ namespace SWD
             string minmax = min + "/" + max;
             return minmax;
 
+        }
+
+        public string kwartyle()
+        {
+
+            string q1, q3;
+            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+            int a = liczba_wierszy / 4;
+         
+            listaKolumn[wybor.SelectedIndex].Sort();
+
+            q1 = listaKolumn[wybor.SelectedIndex][a].ToString();
+            q3 = listaKolumn[wybor.SelectedIndex][a*3].ToString();
+            
+            
+            return q1,q2; // O TUTAJ TAM NA GÓRE
         }
     }
 }
