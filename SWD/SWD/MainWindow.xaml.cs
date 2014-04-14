@@ -49,7 +49,7 @@ namespace SWD
                 OpenFileDialog dlg = new OpenFileDialog();
                 dlg.DefaultExt = ".txt";
                 dlg.Filter = "Text documents (.txt)|*.txt";
-                Nullable<bool> result = dlg.ShowDialog();
+                Nullable<bool> result = dlg.ShowDialog(); 
                              
                 if (result == true)
                 {
