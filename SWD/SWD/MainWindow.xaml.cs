@@ -125,7 +125,14 @@ namespace SWD
             }
 
             text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
+<<<<<<< HEAD
             text_mediana.Text = mediana() + "";
+=======
+            text_mediana.Text = mediana().ToString();
+            text_minmax.Text = minmax();
+            //text_kw1.Text = kawrtyle
+            //text_kw2.Text = kawrtyle
+>>>>>>> 5236fbaa8f62afddf38e6399e489151d7c226af5
 
         }
         public Double mediana()
@@ -147,6 +154,36 @@ namespace SWD
             }
 
             return med;
+        }
+
+        public string minmax()
+        {
+            
+            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+
+            listaKolumn[wybor.SelectedIndex].Sort();
+
+            String min= listaKolumn[wybor.SelectedIndex][0].ToString();
+            String max = listaKolumn[wybor.SelectedIndex][liczba_wierszy-1].ToString();
+            string minmax = min + "/" + max;
+            return minmax;
+
+        }
+
+        public string kwartyle()
+        {
+
+            string q1, q3;
+            int liczba_wierszy = listaKolumn[wybor.SelectedIndex].Count;
+            int a = liczba_wierszy / 4;
+         
+            listaKolumn[wybor.SelectedIndex].Sort();
+
+            q1 = listaKolumn[wybor.SelectedIndex][a].ToString();
+            q3 = listaKolumn[wybor.SelectedIndex][a*3].ToString();
+            
+            
+            return q1,q2; // O TUTAJ TAM NA GÓRE
         }
     }
 }
