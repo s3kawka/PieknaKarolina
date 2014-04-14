@@ -52,6 +52,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -73,6 +74,7 @@
                                     <Image Source="Pictures/b.png" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0"></Image>
                                 </Grid>
                             </Button>
+                            
                         </Border>
                         <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
                             <Button x:Name="zm_klas" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zamiana danych tekstowych na numeryczne">
@@ -99,7 +101,9 @@
                             </Button>
                         </Border>
                     </Grid>
-
+                    <Grid Grid.Row="2">
+                        <TextBox Name="przedział" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black"></TextBox>
+                    </Grid>
                 </Grid>
             </Border>
             <Border Grid.Column="2" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
