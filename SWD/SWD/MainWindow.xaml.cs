@@ -118,32 +118,25 @@ namespace SWD
 
         private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-<<<<<<< HEAD
+
 
             text_średnia.Text = srednia() + "";
             text_mediana.Text = mediana() + "";
-            //String[] mm = minmax();
-            //text_minmax1.Text = mm[0];
-            //text_minmax2.Text = mm[1];
+            String[] mm = minmax();
+            text_minmax1.Text = mm[0];
+            text_minmax2.Text = mm[1];
             String[] q = kwartyle();
             text_kw1.Text = q[0];
             text_kw2.Text = q[1];
 
-=======
->>>>>>> 481668258ae0aeb6f3b735ea5439fd2a197b195a
             try
             {
                 text_średnia.Text = srednia() + "";
                 text_mediana.Text = mediana() + "";
-<<<<<<< HEAD
-                //String[] mm1 = minmax();
-                //.Text = mm[0];
-                //text_minmax2.Text = mm[1];
+                String[] mm1 = minmax();
+                text_minmax1.Text = mm[0];
+                text_minmax2.Text = mm[1];
                 String[] q1 = kwartyle();
-=======
-                text_minmax.Text = minmax();
-                String[] q = kwartyle();
->>>>>>> 481668258ae0aeb6f3b735ea5439fd2a197b195a
                 text_kw1.Text = q[0];
                 text_kw2.Text = q[1];
             }
@@ -152,10 +145,7 @@ namespace SWD
                 text_średnia.Text = "Nie liczbowa kolumna";
             }
             
-<<<<<<< HEAD
 
-=======
->>>>>>> 481668258ae0aeb6f3b735ea5439fd2a197b195a
         }
 
         public Double srednia()
