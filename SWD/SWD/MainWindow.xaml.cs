@@ -49,111 +49,83 @@ namespace SWD
                 dlg.DefaultExt = ".txt";
                 dlg.Filter = "Text documents (.txt)|*.txt";
                 Nullable<bool> result = dlg.ShowDialog();
-
-                
-
+                             
                 if (result == true)
                 {
                     string filename = dlg.FileName;
-                    /*long liczbaWierszy = File.ReadAllLines(filename).LongLength;
-
-                    DataSet wynik = new DataSet();
-                    string[] textData = System.IO.File.ReadAllLines(filename);
-                    string[] naglowki = textData[0].Split(' ', ',');
-
-                    DataTable dataTable1 = new DataTable();
-                    foreach (string header in naglowki)
-                        dataTable1.Columns.Add(header, typeof(string), null);
-                    for (int i = 1; i < liczbaWierszy; i++)
-                        dataTable1.Rows.Add(textData[i].Split(','));
-                    blok.DataContext = dataTable1;*/
-
-                    string[] textData = System.IO.File.ReadAllLines(filename);
-                    string[] naglowki = textData[0].Split(' ', ',');
-                    DataTable dt = new DataTable();
-                    foreach (string c in naglowki)
-                    {
-                        dt.Columns.Add(c);
-                    }
-                    string newline;
-                    while ((newline = ) != null)
-                    {
-                        DataRow dr = dt.NewRow();
-                        string[] values = newline.Split(' ');
-                        for (int i = 0; i < values.Length; i++)
-                        {
-                            dr[i] = values[i];
-                        }
-                        dt.Rows.Add(dr);
-                    }
-                    file.Close();
-                    blok.ItemSource = dt;
-
-
-
-                    //long liczbaWierszy = File.ReadAllLines(filename).LongLength;
-                    //long liczbaKolumn = File.ReadAllLines(filename)[0].Split(' ', ',').LongLength;
-
-                    //object[][] tablica = new object[liczbaKolumn][];
-
-                    //foreach(string k in File.ReadAllLines(filename))
-                    //{
-                    //    foreach(string l in k.Split(' ', ','))
-                    //    {
-
-                    //    }
-                    //}
-
-                    /*foreach (string k in File.ReadAllLines(filename))
+                    
+                    // Wpisanie do naszej listy || Lista list obiektów = mamy na każdą kolumnę jako 
+                    // listę typu Object i te kolumny siedzą w liscie listaKolumn, 
+                    // jak chcesz się dostać do wiersza 10, w 5 kolumnie to dajesz listaKolumn[5][10]
+                    foreach (string k in File.ReadAllLines(filename))
                     {
                         int j = 0;
+                        // foreach dla każdego stringa wydzielonego z jednej przeczytaniej linii, stringa dzieli spacja lub przecinek
                         foreach (string l in k.Split(new char[] { ' ', ',' }))
                         {
+                            // dodanie list reprezentujących kolumny, jednorazowo przy pierwszej iteracji
                             if(listaKolumn.Count < k.Split(new char[] { ' ', ',' }).Length)
                             {
                                 listaKolumn.Add(new List<object>());
                             }
                             double temp;
+                            // jeżeli da się rzutować jedno pole z pliku tekstowego na liczbę to wpisz liczbę jak nie to stringa
                             if (Double.TryParse(l, out temp))
                                 listaKolumn[j].Add(temp);
                             else
                                 listaKolumn[j].Add(l);
-                            blok.Text += listaKolumn[j][listaKolumn[j].Count-1]+ " ";
                             j++;                            
                         }
-                        blok.Text += "\n";
-                    }*/
+                    }
 
-                    //CollectionViewSource items;
-                    //items = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
-                    //items.Source = listaKolumn;
+                    DataTable dane = new DataTable();
 
-                    //blok.ItemsSource = listaKolumn;
+                    // Stworzenie kolumn w DataTable
+                    for (int i = 0; i < listaKolumn.Count; i++)
+                    {
+                        double temp;
+                        // Rzutowanie jak przy tworzeniu list, jak liczba to typu double jak nie to String
+                        if (Double.TryParse(listaKolumn[i][0].ToString(), out temp))
+                            dane.Columns.Add("Column" + (i + 1), typeof(Double));
+                        else
+                            dane.Columns.Add("Column" + (i + 1), typeof(String));
+                    }
+                    // Wpisanie danych do DataTable pierwszy for po wierszach, wewnętrzny po kolumnach
+                    for (int i = 0; i < listaKolumn[0].Count; i++)
+                    {
+                        DataRow row = dane.Rows.Add();
+                        for (int j = 0; j < listaKolumn.Count; j++)
+                            row[j] = listaKolumn[j][i];
+                    }
+                    
+                    // Zbindowanie danych z DataTable do GridView
+                    blok.ItemsSource = dane.AsDataView();
 
-                    //for (int i = 0; i < listaKolumn.Count; i++)
-                      //  wybor.Items.Add(new ItemObject("kolumna" + i, i));
 
+                    // Wpisanie kolum do listy rozwijanej
+                    for (int i = 0; i < listaKolumn.Count; i++)
+                        wybor.Items.Add(new ItemObject("kolumna" + (i+1), i));
                 }
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             
 
         }
 
-        private void oblicz_Click(object sender, RoutedEventArgs e)
+        private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Double cnt=0;
-            for(int i=0; i < listaKolumn[0].Count; i++)
+            Double cnt = 0;
+            for (int i = 0; i < listaKolumn[0].Count; i++)
             {
-                cnt += (float)listaKolumn[((int)(wybor.SelectedValue))][i];
-                //wybor.Sel
+                Double temp;
+                Double.TryParse(listaKolumn[wybor.SelectedIndex][i].ToString(), out temp);
+                cnt += temp;
             }
 
-            text_średnia.Text = (cnt / (float)listaKolumn[((int)(wybor.SelectedValue))].Count) + "";
+            text_średnia.Text = (cnt / listaKolumn[wybor.SelectedIndex].Count) + "";
         }
     }
 }

@@ -178,7 +178,7 @@
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox Name="wybor"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="1" IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B">
+                    <ComboBox Name="wybor"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="1" IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged">
                         <ComboBox.Background>
                             <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                                 <GradientStop Color="White" Offset="0"/>
