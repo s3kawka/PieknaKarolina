@@ -150,6 +150,7 @@ namespace SWD
                     else
                         for (int i = 0; i < listaKolumn.Count; i++)
                             wybor.Items.Add(new ItemObject("kolumna" + (i + 1), i));
+                    wybor.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
@@ -265,8 +266,6 @@ namespace SWD
 
         private void dyskr_Click(object sender, RoutedEventArgs e)
         {
-            List<Double> kolumna = castToDouble(listaKolumn[wybor.SelectedIndex]);
-            List<Double> outList = new List<Double>();
             int liczPrzedz = Int32.Parse(przedzial.Text);
             double dlugosc;
 
@@ -276,17 +275,25 @@ namespace SWD
             dlugosc = (minMax[1] - minMax[0]) / liczPrzedz;
 
             przedzialCur[0] = minMax[0];
-            przedzialCur[1] = przedzialCur[0] + dlugosc;
+            przedzialCur[1] = przedzialCur[0];
+
+            daneTab.Columns.Add("DYS_K" + wybor.SelectedIndex + "_P" + liczPrzedz, typeof(int));
 
             for (int i = 0; i < liczPrzedz; i++)
             {
-                przedzialCur[0] += dlugosc;
+                if(i!=0)
+                    przedzialCur[0] += dlugosc;
                 przedzialCur[1] += dlugosc;
-
-                foreach (Double d in kolumna)
+                foreach (DataRow row in daneTab.Rows)
                 {
-                    if( d <= przedzialCur[0] && d > przedzialCur[
+                    if ((double)row[wybor.SelectedIndex] >= przedzialCur[0] &&  (double)row[wybor.SelectedIndex] < przedzialCur[1])
+                    {
+                        row[row.ItemArray.Length - 1] = i + 1;
+                    }
+                    if(i==liczPrzedz-1 && (double)row[wybor.SelectedIndex] == minMax[1])
+                        row[row.ItemArray.Length - 1] = i + 1;
                 }
+                blok.ItemsSource = daneTab.AsDataView();
             }
     
         }
@@ -298,6 +305,35 @@ namespace SWD
             foreach (object o in toCast)
                 temp.Add((Double)o);
             return temp;
+        }
+
+        private void zm_klas_Click(object sender, RoutedEventArgs e)
+        {
+            //object[] wyst = zliczWystapienia();
+            List<object> wyst = zliczWystapienia();
+
+            daneTab.Columns.Add("DYSNUM_K" + wybor.SelectedIndex, typeof(int));
+            int i=0;
+            foreach (DataRow row in daneTab.Rows)
+            {
+                i = wyst.FindIndex(x => x.Equals(row[wybor.SelectedIndex]));
+                row[row.ItemArray.Length - 1] = i + 1;
+            }
+            blok.ItemsSource = daneTab.AsDataView();
+        }
+
+        private List<object> zliczWystapienia()
+        {
+            List<object> wyst = new List<object>();
+
+            foreach (DataRow row in daneTab.Rows)
+            {
+                if (wyst.Contains(row[wybor.SelectedIndex]))
+                    continue;
+                else
+                    wyst.Add(row[wybor.SelectedIndex]);
+            }
+            return wyst;
         }
     }
 }

@@ -77,7 +77,7 @@
                             
                         </Border>
                         <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="zm_klas" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zamiana danych tekstowych na numeryczne">
+                            <Button x:Name="zm_klas" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zamiana danych tekstowych na numeryczne" Click="zm_klas_Click">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
