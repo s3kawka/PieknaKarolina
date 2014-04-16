@@ -135,7 +135,7 @@
                             </Button>
                         </Border>
                         <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
-                            <Button x:Name="cos" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany">
+                            <Button x:Name="cos" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Click="cos_Click">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>

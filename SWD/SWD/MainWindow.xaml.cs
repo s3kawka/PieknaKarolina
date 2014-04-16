@@ -445,7 +445,7 @@ namespace SWD
 
             //licz.OrderByDescending(k => k.count);
 
-            daneTab.Columns.Add("DYSNUM_K" + wybor.SelectedIndex, typeof(int));
+            daneTab.Columns.Add("DYSNUM_K" + wybor.SelectedIndex + "_N" + liczKlas, typeof(int));
             int i = 0;
             foreach ( var s in sorted)
             {
@@ -501,7 +501,10 @@ namespace SWD
             blok.ItemsSource = daneTab.AsDataView();
             odswiezlisty();
         }
-  
 
+        private void cos_Click(object sender, RoutedEventArgs e)
+        {
+
+        }        
     }
 }
