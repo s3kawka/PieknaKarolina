@@ -1,0 +1,12 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="SWD.WindowChart"
+    
+        Title="WindowChart" Height="300" Width="300">
+    <Grid Margin="0,0,0,0">
+        <chartingToolkit:Chart Title="Chart Title" x:Name="chart">
+
+        </chartingToolkit:Chart>
+    </Grid>
+</Window>

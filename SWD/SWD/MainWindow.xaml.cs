@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections;
+using System.Linq;
 using System.IO;
 using System.Windows;
 using System.Collections.Generic;
@@ -137,6 +138,10 @@ namespace SWD
 
                     // Wpisanie kolumn do listy rozwijanej
 
+                    wybor.Items.Clear();
+                    wybor_chart1.Items.Clear();
+                    wybor_chart2.Items.Clear();
+
                     if (naglowki != null)
                     {
                         int i = 0;
@@ -144,12 +149,20 @@ namespace SWD
                         {
 
                             wybor.Items.Add(new ItemObject(l, i));
+                            wybor_chart1.Items.Add(new ItemObject(l, i));
+                            wybor_chart2.Items.Add(new ItemObject(l, i));
+                            wybor_chart_klasa.Items.Add(new ItemObject(l, i));
                             i++;
                         }
                     }
                     else
                         for (int i = 0; i < listaKolumn.Count; i++)
+                        {
                             wybor.Items.Add(new ItemObject("kolumna" + (i + 1), i));
+                            wybor_chart1.Items.Add(new ItemObject("kolumna" + (i + 1), i));
+                            wybor_chart2.Items.Add(new ItemObject("kolumna" + (i + 1), i));
+                            wybor_chart_klasa.Items.Add(new ItemObject("kolumna" + (i + 1), i));
+                        }
                     wybor.SelectedIndex = 0;
                 }
             }
@@ -263,7 +276,7 @@ namespace SWD
 
             return p;
         }
-
+        // Dyskretyzacja przedziały
         private void dyskr_Click(object sender, RoutedEventArgs e)
         {
             int liczPrzedz = Int32.Parse(przedzial.Text);
@@ -297,7 +310,7 @@ namespace SWD
             }
     
         }
-
+        // lista object na lista double
         private List<Double> castToDouble(List<object> toCast)
         {
             List<Double> temp = new List<Double>();
@@ -307,6 +320,16 @@ namespace SWD
             return temp;
         }
 
+        private List<String> castToString(List<object> toCast)
+        {
+            List<String> temp = new List<String>();
+
+            foreach (object o in toCast)
+                temp.Add((string)o);
+            return temp;
+        }
+
+        // Dyskretyzacja n klas na n liczbowych
         private void zm_klas_Click(object sender, RoutedEventArgs e)
         {
             //object[] wyst = zliczWystapienia();
@@ -322,6 +345,7 @@ namespace SWD
             blok.ItemsSource = daneTab.AsDataView();
         }
 
+        // Zlicza ile jest klas i wyrzuca je w liście w kolejności wystąpienia
         private List<object> zliczWystapienia()
         {
             List<object> wyst = new List<object>();
@@ -335,5 +359,82 @@ namespace SWD
             }
             return wyst;
         }
+
+        private List<object> zliczWystapieniaDoSlownika()
+        {
+            List<object> wyst = new List<object>();
+
+            foreach (DataRow row in daneTab.Rows)
+            {
+                if (wyst.Contains(row[wybor_chart_klasa.SelectedIndex]))
+                    continue;
+                else
+                    wyst.Add(row[wybor_chart_klasa.SelectedIndex]);
+            }
+            return wyst;
+        }
+
+        //Dyskretyzacja n klas na k klas
+        private void wyb_nom_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> wyst = zliczWystapienia();
+
+            List<String> list = castToString(listaKolumn[wybor.SelectedIndex]);
+
+            int ileKlas = Int32.Parse(liczKlas.Text);
+            
+            //var g = list.GroupBy(z => z);
+            var licz = 
+                from k in list 
+                group k by k into g 
+                select new { klucz = g.Key, count= g.Count() };
+
+            var sorted =
+                from k in licz
+                orderby k.count descending
+                select k;
+
+            //licz.OrderByDescending(k => k.count);
+
+            daneTab.Columns.Add("DYSNUM_K" + wybor.SelectedIndex, typeof(int));
+            int i = 0;
+            foreach ( var s in sorted)
+            {
+                i++;
+                if (i > ileKlas)
+                    i = ileKlas;
+                foreach (DataRow row in daneTab.Rows)
+                {
+                    //i = wyst.FindIndex(x => x.Equals(row[wybor.SelectedIndex]));
+                    if ( (string)row[wybor.SelectedIndex] == s.klucz)
+                        row[row.ItemArray.Length - 1] = i;
+                }
+            } 
+            
+            blok.ItemsSource = daneTab.AsDataView();
+        }
+
+        private void rys_wykres_Click(object sender, RoutedEventArgs e)
+        {
+            List<object> klasy = zliczWystapieniaDoSlownika();
+            Dictionary<double, double> slownik;
+            WindowChart oknowykres = new WindowChart();
+
+            foreach (object o in klasy)
+            {
+                slownik = new Dictionary<double, double>();
+                foreach (DataRow r in daneTab.Rows)
+                {
+                    if (!(r[wybor_chart_klasa.SelectedIndex].Equals(o)))
+                       continue;
+
+                    if (!slownik.ContainsKey(Double.Parse(r[wybor_chart1.SelectedIndex].ToString())))
+                        slownik.Add(Double.Parse(r[wybor_chart1.SelectedIndex].ToString()), Double.Parse(r[wybor_chart2.SelectedIndex].ToString()));
+                }
+                oknowykres.addSeries(slownik);
+            }
+            oknowykres.Show();
+        }
+
     }
 }
