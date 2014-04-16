@@ -142,7 +142,7 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">MIN-MX</Label>
-                                    <Image Source="Pictures/a.png" Margin="0" Grid.Row="1" />
+                                    <Image Source="Pictures/a.png" Margin="0,6,0,10" Grid.RowSpan="2" />
                                 </Grid>
                             </Button>
                         </Border>
@@ -272,6 +272,8 @@
                 </Button>
             </Grid>
         </Grid>
+        <TextBox x:Name="norm_przed" Width="45" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="517,68,0,0"/>
+        <TextBox x:Name="norm_przed2" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="567,68,0,0"/>
 
     </Grid>
 </Window>

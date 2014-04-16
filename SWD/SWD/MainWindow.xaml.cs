@@ -85,7 +85,7 @@ namespace SWD
                             }
                             double temp;
                             // jeżeli da się rzutować jedno pole z pliku tekstowego na liczbę to wpisz liczbę jak nie to stringa
-                            if (Double.TryParse(l, NumberStyles.Any, CultureInfo.InvariantCulture, out temp))
+                            if (Double.TryParse(l.Replace('.', ','), out temp))
                                 listaKolumn[j].Add(temp);
                             else
                                 listaKolumn[j].Add(l);
@@ -115,9 +115,9 @@ namespace SWD
                             double temp;
                             // Rzutowanie jak przy tworzeniu list, jak liczba to typu double jak nie to String
                             if (Double.TryParse(listaKolumn[i][0].ToString(), out temp))
-                                daneTab.Columns.Add("Column" + (i + 1), typeof(Double));
+                                daneTab.Columns.Add("Kolumna" + (i + 1), typeof(Double));
                             else
-                                daneTab.Columns.Add("Column" + (i + 1), typeof(String));
+                                daneTab.Columns.Add("Kolumna" + (i + 1), typeof(String));
                         }
 
                     // Stworzenie kolumn w DataTable
@@ -140,28 +140,19 @@ namespace SWD
                     wybor_chart1.Items.Clear();
                     wybor_chart2.Items.Clear();
 
-                    if (naglowki != null)
+                    int z = 0;
+                    foreach (var x in daneTab.Columns)
                     {
-                        int i = 0;
-                        foreach (string l in naglowki.Split(new char[] { ' ', '\t', ';' }))
-                        {
-
-                            wybor.Items.Add(new ItemObject(l, i));
-                            wybor_chart1.Items.Add(new ItemObject(l, i));
-                            wybor_chart2.Items.Add(new ItemObject(l, i));
-                            wybor_chart_klasa.Items.Add(new ItemObject(l, i));
-                            i++;
-                        }
+                        wybor.Items.Add(new ItemObject(x.ToString(), z));
+                        wybor_chart1.Items.Add(new ItemObject(x.ToString(), z));
+                        wybor_chart2.Items.Add(new ItemObject(x.ToString(), z));
+                        wybor_chart_klasa.Items.Add(new ItemObject(x.ToString(), z));
+                        z++;
                     }
-                    else
-                        for (int i = 0; i < listaKolumn.Count; i++)
-                        {
-                            wybor.Items.Add(new ItemObject("kolumna" + (i + 1), i));
-                            wybor_chart1.Items.Add(new ItemObject("kolumna" + (i + 1), i));
-                            wybor_chart2.Items.Add(new ItemObject("kolumna" + (i + 1), i));
-                            wybor_chart_klasa.Items.Add(new ItemObject("kolumna" + (i + 1), i));
-                        }
+
                     wybor.SelectedIndex = 0;
+                    wybor_chart1.SelectedIndex = 0;
+                    wybor_chart2.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
@@ -171,8 +162,31 @@ namespace SWD
             }
         }
 
+        private void odswiezlisty()
+        {
+            wybor.Items.Clear();
+            wybor_chart1.Items.Clear();
+            wybor_chart2.Items.Clear();
+
+            int i = 0;
+            foreach (var x in daneTab.Columns)
+            {
+                wybor.Items.Add(new ItemObject(x.ToString(), i));
+                wybor_chart1.Items.Add(new ItemObject(x.ToString(), i));
+                wybor_chart2.Items.Add(new ItemObject(x.ToString(), i));
+                wybor_chart_klasa.Items.Add(new ItemObject(x.ToString(), i));
+                i++;
+            }
+
+            wybor.SelectedIndex = 0;
+            wybor_chart1.SelectedIndex = 0;
+            wybor_chart2.SelectedIndex = 0;
+        }
+
         private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (wybor.SelectedIndex == -1)
+                return;
             try
             {
                 text_średnia.Text = srednia() + "";
@@ -192,6 +206,7 @@ namespace SWD
             catch (InvalidCastException ex)
             {
                 text_średnia.Text = "Nie liczbowa kolumna";
+                //throw;
             }
         }
 
@@ -200,7 +215,14 @@ namespace SWD
             Double cnt = 0;
             for (int i = 0; i < listaKolumn[0].Count; i++)
             {
-                cnt += (Double)listaKolumn[wybor.SelectedIndex][i];
+                try
+                {
+                    cnt += (Double)listaKolumn[wybor.SelectedIndex][i];
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
 
             cnt = (cnt / listaKolumn[wybor.SelectedIndex].Count);
@@ -316,9 +338,10 @@ namespace SWD
                     if(i==liczPrzedz-1 && (double)row[wybor.SelectedIndex] == minMax[1])
                         row[row.ItemArray.Length - 1] = i + 1;
                 }
-                blok.ItemsSource = daneTab.AsDataView();
+                
             }
-    
+            blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }
         // lista object na lista double
         private List<Double> castToDouble(List<object> toCast)
@@ -353,6 +376,7 @@ namespace SWD
                 row[row.ItemArray.Length - 1] = i + 1;
             }
             blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }
 
         // Zlicza ile jest klas i wyrzuca je w liście w kolejności wystąpienia
@@ -425,6 +449,7 @@ namespace SWD
             } 
             
             blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }
 
         //Rysowanie
@@ -453,14 +478,18 @@ namespace SWD
         private void norm_Click(object sender, RoutedEventArgs e)
         {
             double odchylenie = Math.Sqrt(wariancja());
+            double avg = srednia();
 
             daneTab.Columns.Add("NORM_K" + wybor.SelectedIndex, typeof(Double));
 
             foreach (DataRow r in daneTab.Rows)
             {
-                
+                r[r.ItemArray.Length -1] = (((double)r[wybor.SelectedIndex] - avg) / odchylenie);
             }
+            blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }
+  
 
     }
 }
