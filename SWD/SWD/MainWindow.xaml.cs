@@ -167,6 +167,7 @@ namespace SWD
             wybor.Items.Clear();
             wybor_chart1.Items.Clear();
             wybor_chart2.Items.Clear();
+            wybor_chart_klasa.Items.Clear();
 
             int i = 0;
             foreach (var x in daneTab.Columns)
@@ -358,7 +359,8 @@ namespace SWD
             List<String> temp = new List<String>();
 
             foreach (object o in toCast)
-                temp.Add((string)o);
+                    temp.Add((string)o);
+
             return temp;
         }
 
@@ -409,14 +411,24 @@ namespace SWD
             return wyst;
         }
 
+        private List<object> doListy()
+        {
+            List<object> temp = new List<object>();
 
+            foreach (DataRow r in daneTab.Rows)
+            {
+                temp.Add(r[wybor.SelectedIndex]);
+            }
+            return temp;
+        }
 
         //Dyskretyzacja n klas na k klas
         private void wyb_nom_Click(object sender, RoutedEventArgs e)
         {
             List<object> wyst = zliczWystapienia();
 
-            List<String> list = castToString(listaKolumn[wybor.SelectedIndex]);
+            List<object> list = doListy();
+
 
             int ileKlas = Int32.Parse(liczKlas.Text);
             
@@ -443,7 +455,7 @@ namespace SWD
                 foreach (DataRow row in daneTab.Rows)
                 {
                     //i = wyst.FindIndex(x => x.Equals(row[wybor.SelectedIndex]));
-                    if ( (string)row[wybor.SelectedIndex] == s.klucz)
+                    if ( row[wybor.SelectedIndex].Equals(s.klucz))
                         row[row.ItemArray.Length - 1] = i;
                 }
             } 
