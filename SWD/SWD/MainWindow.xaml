@@ -195,6 +195,24 @@
                 </ComboBox.Background>
 
             </ComboBox>
+            <Button x:Name="knn_man" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="277,404,98,-385" Click="knn_man_Click" Grid.Column="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="Manhatan"/>
+                </Grid>
+            </Button>
+            <Button x:Name="knn_lnies" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="277,478,98,-459" Click="knn_lnie_Click" Grid.Column="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="lnies"/>
+                </Grid>
+            </Button>
 
         </Grid>
         <Grid x:Name="boczne" Grid.Column="1" Grid.Row="1">
@@ -274,6 +292,15 @@
         </Grid>
         <TextBox x:Name="norm_przed" Width="45" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="517,68,0,0"/>
         <TextBox x:Name="norm_przed2" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="567,68,0,0"/>
+        <Button x:Name="knn" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="10,241,98,239" Click="knn_Click" Grid.Row="1" Grid.Column="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="Euklides"/>
+            </Grid>
+        </Button>
 
     </Grid>
 </Window>
