@@ -56,6 +56,8 @@ namespace SWD
         private SolidColorBrush getColorBrush()
         {
             iBrush++;
+            if (iBrush == 16)
+                iBrush = 0;
             return kolory[iBrush];
         }
 

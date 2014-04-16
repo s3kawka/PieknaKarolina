@@ -123,7 +123,7 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="norm" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Normalizacja zmiennych rzeczywistych" >
+                            <Button x:Name="norm" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Normalizacja zmiennych rzeczywistych" Click="norm_Click" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>

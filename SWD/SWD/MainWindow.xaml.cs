@@ -10,8 +10,6 @@ using System.Windows.Data;
 using System.Data;
 using System.Globalization;
 
-
-
 namespace SWD
 {
     /// <summary>
@@ -209,6 +207,18 @@ namespace SWD
             return cnt;
         }
 
+        private double wariancja()
+        {
+            double war=0;
+            double avg = srednia();
+            foreach (DataRow r in daneTab.Rows)
+            {
+                war += Math.Pow(((double)r[wybor.SelectedIndex] - avg), 2);
+            }
+
+            war = war / daneTab.Rows.Count;
+            return war;
+        }
 
         public Double mediana()
         {
@@ -360,6 +370,7 @@ namespace SWD
             return wyst;
         }
 
+        //Zlicza wystąpienie klas do funkcji rysującej
         private List<object> zliczWystapieniaDoSlownika()
         {
             List<object> wyst = new List<object>();
@@ -373,6 +384,8 @@ namespace SWD
             }
             return wyst;
         }
+
+
 
         //Dyskretyzacja n klas na k klas
         private void wyb_nom_Click(object sender, RoutedEventArgs e)
@@ -414,6 +427,7 @@ namespace SWD
             blok.ItemsSource = daneTab.AsDataView();
         }
 
+        //Rysowanie
         private void rys_wykres_Click(object sender, RoutedEventArgs e)
         {
             List<object> klasy = zliczWystapieniaDoSlownika();
@@ -434,6 +448,18 @@ namespace SWD
                 oknowykres.addSeries(slownik);
             }
             oknowykres.Show();
+        }
+
+        private void norm_Click(object sender, RoutedEventArgs e)
+        {
+            double odchylenie = Math.Sqrt(wariancja());
+
+            daneTab.Columns.Add("NORM_K" + wybor.SelectedIndex, typeof(Double));
+
+            foreach (DataRow r in daneTab.Rows)
+            {
+                
+            }
         }
 
     }
