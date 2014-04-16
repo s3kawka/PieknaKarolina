@@ -370,7 +370,7 @@ namespace SWD
             //object[] wyst = zliczWystapienia();
             List<object> wyst = zliczWystapienia();
 
-            daneTab.Columns.Add("DYSNUM_K" + wybor.SelectedIndex, typeof(int));
+            daneTab.Columns.Add("DYSNUM_K" + (wybor.SelectedIndex+1), typeof(int));
             int i=0;
             foreach (DataRow row in daneTab.Rows)
             {
@@ -445,7 +445,7 @@ namespace SWD
 
             //licz.OrderByDescending(k => k.count);
 
-            daneTab.Columns.Add("DYSNUM_K" + wybor.SelectedIndex + "_N" + liczKlas, typeof(int));
+            daneTab.Columns.Add("DYSNUM_K" + (wybor.SelectedIndex +1) + "_N" + ileKlas, typeof(int));
             int i = 0;
             foreach ( var s in sorted)
             {
@@ -504,7 +504,18 @@ namespace SWD
 
         private void cos_Click(object sender, RoutedEventArgs e)
         {
+            double newMin = Double.Parse(norm_przed.Text);
+            double newMax = Double.Parse(norm_przed2.Text);
 
+            //double min =  
+            //double max =
+
+            daneTab.Columns.Add("NORM_K" + (wybor.SelectedIndex +1) + "MIN" + newMin + "MAX" + newMax, typeof(Double));
+
+            foreach (DataRow r in daneTab.Rows)
+            {
+               // r[r.ItemArray.Count-1] = 
+            }
         }        
     }
 }
