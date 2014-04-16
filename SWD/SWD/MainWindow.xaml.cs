@@ -507,15 +507,17 @@ namespace SWD
             double newMin = Double.Parse(norm_przed.Text);
             double newMax = Double.Parse(norm_przed2.Text);
 
-            //double min =  
-            //double max =
+            double min = minmax()[0];  
+            double max = minmax()[1];
 
             daneTab.Columns.Add("NORM_K" + (wybor.SelectedIndex +1) + "MIN" + newMin + "MAX" + newMax, typeof(Double));
 
             foreach (DataRow r in daneTab.Rows)
             {
-               // r[r.ItemArray.Count-1] = 
+                r[r.ItemArray.Count() - 1] = ((((double)r[wybor.SelectedIndex] - min) / (max - min)) * (newMax - newMin)) + newMin;
             }
+            blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }        
     }
 }
