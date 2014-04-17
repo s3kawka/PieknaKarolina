@@ -213,7 +213,7 @@
                     <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="lnies"/>
                 </Grid>
             </Button>
-
+           
         </Grid>
         <Grid x:Name="boczne" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
