@@ -831,5 +831,27 @@ namespace SWD
         {
             oblicz_odleglosci_mahal();
         }
+
+        private void zapisz_Click(object sender, RoutedEventArgs e)
+        {
+            //string file_name = "C:\\test1.txt";
+
+           // System.IO.StreamWriter objWriter;
+
+           // objWriter = new System.IO.StreamWriter(file_name);
+            using (StreamWriter sw = File.CreateText("lol.txt"))
+            {
+
+                foreach (DataRow row in daneTab.Rows)
+                {
+                    foreach (DataColumn col in daneTab.Columns)
+                    {
+                        sw.Write(row[col].ToString()+" ");
+
+                    }
+                    sw.WriteLine();
+                }
+            }
+        }
     }
 }

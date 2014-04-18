@@ -350,7 +350,7 @@
                 </Grid>
 
             </Grid>
-            <Button Grid.Row="2" VerticalAlignment="Bottom" Name="zapisz" Height="50" Foreground="#FF327583" BorderBrush="{x:Null}" Margin="1" VerticalContentAlignment="Top" Background="#FFCEDFE4">
+            <Button Grid.Row="2" VerticalAlignment="Bottom" Name="zapisz" Height="50" Foreground="#FF327583" BorderBrush="{x:Null}" Margin="1,0,1,1" VerticalContentAlignment="Top" Background="#FFCEDFE4" Click="zapisz_Click">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Margin=" 0,5,0,0" Foreground="#FF327583" FontSize="20">ZAPISZ PLIK</Label>
             </Button>
         </Grid>
