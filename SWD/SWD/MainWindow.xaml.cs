@@ -432,7 +432,7 @@ namespace SWD
             List<object> list = doListy();
 
 
-            int ileKlas = Int32.Parse(liczKlas.Text);
+            int ileKlas = Int32.Parse(przedzial.Text);
             
             //var g = list.GroupBy(z => z);
             var licz = 

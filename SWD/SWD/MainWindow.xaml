@@ -2,9 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" 
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen" Height="700" Width="1100">
     <Window.Background>
-        <ImageBrush ImageSource="Pictures/blue5.jpg"/>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFF1F2F3" Offset="0.105"/>
+            <GradientStop Color="#FF377980" Offset="0.93"/>
+        </LinearGradientBrush>
     </Window.Background>
     <Window.Resources>
         <CollectionViewSource x:Key="ItemCollectionViewSource" CollectionViewType="ListCollectionView"/>
@@ -17,7 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="67*"/>
             <RowDefinition Height="419*"/>
-            <RowDefinition Height="25*"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="0" Margin="10,20,0,0" BorderBrush="#FF9DAFB8" BorderThickness="1" >
             <Grid x:Name="dane" Grid.Row="1" Grid.Column="0" Background="White" Opacity="0.7">
@@ -31,6 +35,7 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid x:Name="wgranie" Grid.Column="0" >
@@ -41,36 +46,36 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="WCZYTAJ" Background="{x:Null}" BorderThickness="0" />
+                            <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF" Content="WCZYTAJ" Background="{x:Null}" BorderThickness="0" />
                             <Image Source="Pictures/wgraj.png" Grid.Row="1" Margin="3"></Image>
                         </Grid>
                     </Button>
                 </Border>
             </Grid>
             <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
-                <Grid x:Name="dyskretyzacja" Grid.Column="1" >
+                <Grid x:Name="dyskretyzacja">
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
-                    <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF2D5A70" >DYSKRETYZACJA</Label>
-                    <Grid Grid.Row="1">
+                    
+                    <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF327583" >DYSKRETYZACJA</Label>
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="dyskr" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Dyskretyzacja zmiennych rzeczywistych" Click="dyskr_Click" >
+                        <Border Grid.Column="0"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
+                            <Button x:Name="dyskr" Width="100" Grid.Column="0" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Dyskretyzacja zmiennych rzeczywistych" Click="dyskr_Click" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">PRZEDZIAŁ</Label>
+                                    <Label Grid.Row="0" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF">PRZEDZIAŁ</Label>
                                     <Image Source="Pictures/b.png" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0"></Image>
                                 </Grid>
                             </Button>
@@ -83,40 +88,49 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">ZAMIANA</Label>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF">ZAMIANA</Label>
                                     <Image Source="Pictures/c.png" Grid.Row="1" Margin="0"></Image>
                                 </Grid>
                             </Button>
                         </Border>
                         <Border Grid.Column="2" BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
-                            <Button x:Name="wyb_nom" Width="100" Grid.Column="2"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Preferowanie najliczniejszych klas" Foreground="#FF68CD8D" Click="wyb_nom_Click">
+                            <Button x:Name="wyb_nom" Width="100" Grid.Column="2"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Preferowanie najliczniejszych klas" Foreground="#FF7FB1BF" Click="wyb_nom_Click">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="0" Foreground="#FF68CD8D">WYBÓR</Label>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Padding="0" Foreground="#FF7FB1BF">WYBÓR</Label>
                                     <Image Source="Pictures/d.png" Grid.Row="1" Margin="0"></Image>
                                 </Grid>
                             </Button>
                         </Border>
                     </Grid>
-                    <Grid Grid.Row="2">
-                        <TextBox Name="przedzial" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black"></TextBox>
-                        <TextBox Name="liczKlas" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="201,0,0,0"></TextBox>
-                    </Grid>
+                    <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#FF9DAFB8">
+                        <Grid Background="#FF7FB1BF">
+                            <TextBox Width="100" Name="przedzial" BorderThickness="0,0,0,0"/>
+                        </Grid>
+
+                    </Border>
                 </Grid>
             </Border>
             <Border Grid.Column="2" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
-                <Grid x:Name="normalizacja" Grid.Column="1" >
-
+                <Grid x:Name="normalizacja">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="20"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
-                    <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF2D5A70" >NORMALIZACJA</Label>
-                    <Grid Grid.Row="1">
+                    <Border Grid.Row="1">
+                        <Grid Background="#FF7FB1BF">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBox x:Name="norm_przed" Width="50" BorderThickness="0,1,0,0" Margin="0,0,5,0"/>
+                                <TextBox x:Name="norm_przed2" Width="50" BorderThickness="0,1,0,0" Margin="5,0,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+            <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF327583" >NORMALIZACJA</Label>
+                    <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
@@ -129,7 +143,7 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">NORMAL.</Label>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF">NORMAL.</Label>
                                     <Image Source="Pictures/graphic1.png" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5,5,5,0" Grid.Row="1"/>
                                 </Grid>
                             </Button>
@@ -141,7 +155,7 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D">MIN-MX</Label>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF">MIN-MX</Label>
                                     <Image Source="Pictures/a.png" Margin="0,6,0,10" Grid.RowSpan="2" />
                                 </Grid>
                             </Button>
@@ -150,69 +164,126 @@
 
                 </Grid>
             </Border>
-            <Button x:Name="rys_wykres" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="10,19,365,0" Grid.Column="3" Click="rys_wykres_Click">
-                <Grid>
+            <Border Grid.Column="3" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
+                <Grid x:Name="wykres">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="Wykres"/>
-                </Grid>
-            </Button>
-            <ComboBox x:Name="wybor_chart1"  Grid.Row="0" Grid.Column="3" Margin="115,19,154,47" IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged">
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="White" Offset="0"/>
-                        <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
-                        <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
-                        <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
-                        <GradientStop Color="#FF14B682" Offset="0.996"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
 
-            </ComboBox>
-            <ComboBox x:Name="wybor_chart2"  Grid.Row="0" Grid.Column="3" Margin="115,46,154,20" IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged">
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="White" Offset="0"/>
-                        <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
-                        <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
-                        <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
-                        <GradientStop Color="#FF14B682" Offset="0.996"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
+                    <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF327583" >WYKRES</Label>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
+                            
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="18"/>
+                                    <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                <ComboBox x:Name="wybor_chart1"  Grid.Row="0"  IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged" FontSize="10" BorderThickness="0,0,0,1">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                            <GradientStop Color="White" Offset="0"/>
+                                            <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
+                                            <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
+                                            <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
+                                            <GradientStop Color="#FF14B682" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
 
-            </ComboBox>
-            <ComboBox x:Name="wybor_chart_klasa"  Grid.Row="0" Grid.Column="3" Margin="115,73,154,-7" IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged">
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="White" Offset="0"/>
-                        <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
-                        <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
-                        <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
-                        <GradientStop Color="#FF14B682" Offset="0.996"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
+                                </ComboBox>
+                                <ComboBox x:Name="wybor_chart2"  Grid.Row="1"   IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged" FontSize="10" BorderThickness="0,0,0,1">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                            <GradientStop Color="White" Offset="0"/>
+                                            <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
+                                            <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
+                                            <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
+                                            <GradientStop Color="#FF14B682" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
 
-            </ComboBox>
-            <Button x:Name="knn_man" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="277,404,98,-385" Click="knn_man_Click" Grid.Column="3">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="Manhatan"/>
+                                </ComboBox>
+                                <ComboBox x:Name="wybor_chart_klasa"  Grid.Row="2"  IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged" FontSize="10" BorderThickness="0,0,0,1">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                            <GradientStop Color="White" Offset="0"/>
+                                            <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
+                                            <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
+                                            <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
+                                            <GradientStop Color="#FF14B682" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+                                </ComboBox>
+                                <Button x:Name="rys_wykres" Grid.Row="3" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Rysuje wykres od podanych klas"  Click="rys_wykres_Click">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Label VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF" Content="RYSUJ"/>
+                                    </Grid>
+                                </Button>
+
+
+                           </Grid>
+                            
+                        </Border>
+                        <Border Grid.Column="1"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
+                            <Button x:Name="knn" Width="60" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany"  Click="knn_Click" >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF" Content="Euklides"/>
+                                </Grid>
+                            </Button>
+                            
+                        </Border>
+                        <Border Grid.Column="2"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
+                            <Button x:Name="knn_man" Width="60"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany"  Click="knn_man_Click" Grid.Column="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF" Content="Manhatan"/>
+                                </Grid>
+                            </Button>
+                        </Border>
+                        <Border Grid.Column="3"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
+                            <Button x:Name="knn_lnies" Width="60"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Click="knn_lnie_Click" Grid.Column="3">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF7FB1BF" Content="lnies"/>
+                                </Grid>
+                            </Button>
+                        </Border>
+                    </Grid>
+
                 </Grid>
-            </Button>
-            <Button x:Name="knn_lnies" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="277,478,98,-459" Click="knn_lnie_Click" Grid.Column="3">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="lnies"/>
-                </Grid>
-            </Button>
+            </Border>
+            <Border Grid.Column="4" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
+                <Label></Label>
+            </Border>
+            
+            
 
         </Grid>
         <Grid x:Name="boczne" Grid.Column="1" Grid.Row="1">
@@ -227,7 +298,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Foreground="#FF68CD8D" Padding="0" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold">PODSTAWOWA STYSTYKA</Label>
+                <Label Grid.Row="0" Foreground="#FF7FB1BF" Padding="0" HorizontalAlignment="Center" Margin="0,20,0,0" FontWeight="Bold">PODSTAWOWA STYSTYKA</Label>
                 <Grid Grid.Row="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -259,11 +330,11 @@
 
                     </ComboBox>
 
-                    <Label Grid.Column="1" Grid.Row="1" Foreground="#FFC5E4DA">średnia</Label>
-                    <Label Grid.Column="1" Grid.Row="2" Foreground="#FFC5E4DA">mediana</Label>
-                    <Label Grid.Column="1" Grid.Row="3" Foreground="#FFC5E4DA">min/max</Label>
-                    <Label Grid.Column="1" Grid.Row="4" Foreground="#FFC5E4DA">kwartyle</Label>
-                    <Label Grid.Column="1" Grid.Row="5" Foreground="#FFC5E4DA">percentyle</Label>
+                    <Label Grid.Column="1" Grid.Row="1" Foreground="#FF327583">średnia</Label>
+                    <Label Grid.Column="1" Grid.Row="2" Foreground="#FF327583" Height="26" VerticalAlignment="Top">mediana</Label>
+                    <Label Grid.Column="1" Grid.Row="3" Foreground="#FF327583">min/max</Label>
+                    <Label Grid.Column="1" Grid.Row="4" Foreground="#FF327583">kwartyle</Label>
+                    <Label Grid.Column="1" Grid.Row="5" Foreground="#FF327583">percentyle</Label>
 
                     <TextBox Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="4" Margin="1" Name="text_średnia" IsEnabled="False"/>
                     <TextBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="4" Margin="1" Name="text_mediana" IsEnabled="False"/>
@@ -290,17 +361,7 @@
                 </Button>
             </Grid>
         </Grid>
-        <TextBox x:Name="norm_przed" Width="45" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="517,68,0,0"/>
-        <TextBox x:Name="norm_przed2" Width="50" Height="20" HorizontalAlignment="Left" BorderBrush="black" Margin="567,68,0,0"/>
-        <Button x:Name="knn" Width="100"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Margin="10,241,98,239" Click="knn_Click" Grid.Row="1" Grid.Column="1">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Label Grid.Row="0" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Center" Foreground="#FF68CD8D" Content="Euklides"/>
-            </Grid>
-        </Button>
+        
 
     </Grid>
 </Window>
