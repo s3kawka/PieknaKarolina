@@ -278,12 +278,17 @@
                     </Grid>
 
                 </Grid>
+
             </Border>
             <Border Grid.Column="4" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
                 <Label></Label>
             </Border>
             
             
+
+
+            </Button>
+           
 
         </Grid>
         <Grid x:Name="boczne" Grid.Column="1" Grid.Row="1">

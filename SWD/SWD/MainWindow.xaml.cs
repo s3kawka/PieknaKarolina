@@ -719,7 +719,79 @@ namespace SWD
             x.Show();
 
             return null;
-        }        
+        }
+
+        private double[][] oblicz_odleglosci_mahal()
+        {
+            int i, j, cnt;
+            cnt = 0;
+            List<List<Double>> list = przepiszListe();
+
+            //double[][] odleglosc = new double[daneTab.Rows.Count][];
+            List<KeyValuePair<String, double>> odleglosc = new List<KeyValuePair<string, double>>();
+            int[] knn = new int[list.Count - 1];
+
+            // for (int x = 0; x < daneTab.Rows.Count; x++)
+            //odleglosc[x] = new double[daneTab.Rows.Count];
+
+            for (i = 0; i < list.Count; i++)
+            {
+                for (j = 0; j < list.Count; j++)
+                {
+                    if (i == j)
+                        continue;
+                    double dist = 0;
+                    cnt++;
+                    double[,] matrix = new double[2, list[j].Count];
+                    for(int r=0; r<list[j].Count;r++)
+                    {
+                        matrix[0,r] = list[i][r];
+                        matrix[1,r] = list[j][r];
+                    }
+
+                    double[,] cov = Accord.Statistics.Tools.Covariance(matrix);
+                    double[,] invertedcov = Accord.Math.Matrix.Inverse(cov);
+                    dist = Distance.Mahalanobis(list[i].ToArray(), list[j].ToArray(), invertedcov);//(list[i], list[j]);
+                    odleglosc.Add(new KeyValuePair<string, double>(daneTab.Rows[j].ItemArray[daneTab.Columns.Count - 1].ToString(), dist));
+                }
+                odleglosc.Sort(ckv);
+                string curClass = daneTab.Rows[i].ItemArray[daneTab.Columns.Count - 1].ToString();
+                int dobre = 0;
+                for (int h = 1; h < list.Count - 1; h++)
+                {
+                    cnt++;
+                    //foreach (KeyValuePair<string, double> kv in odleglosc.Take(h))
+                    //{
+                    //    if (kv.Key == curClass)
+                    //        dobre++;
+                    //}
+
+                    var licz =
+                        from o in odleglosc.Take(h)
+                        group o by o.Key into g
+                        select new { a = g.Key, b = g.Count() };
+
+                    licz = licz.OrderByDescending(v => v.b);
+
+                    if (licz.ToList()[0].a == curClass)
+                    {
+                        knn[h]++;
+                    }
+                }
+                odleglosc = new List<KeyValuePair<string, double>>();
+            }
+            WindowChart x = new WindowChart();
+            Dictionary<double, double> dict = new Dictionary<double, double>();
+            for (int u = 1; u < knn.Length; u++)
+            {
+                dict.Add(u, knn[u]);
+            }
+
+            x.addSeries(dict);
+            x.Show();
+
+            return null;
+        }
 
         private void knn_Click(object sender, RoutedEventArgs e)
         {
@@ -753,6 +825,11 @@ namespace SWD
             }
 
             return temp;
+        }
+
+        private void knn_maha_Click(object sender, RoutedEventArgs e)
+        {
+            oblicz_odleglosci_mahal();
         }
     }
 }
