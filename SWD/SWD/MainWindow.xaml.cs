@@ -59,6 +59,7 @@ namespace SWD
                              
                 if (result == true)
                 {
+                    Aktywuj();
                     string filename = dlg.FileName;
                     
 
@@ -880,7 +881,18 @@ namespace SWD
                 }
             }
         }
-
+        public void Aktywuj() 
+        {
+            norm.IsEnabled = true;
+            dyskr.IsEnabled = true;
+            zm_klas.IsEnabled = true;
+            wyb_nom.IsEnabled = true;
+            cos.IsEnabled = true;
+            rys_wykres.IsEnabled = true;
+            knn.IsEnabled = true;
+            knn_lnies.IsEnabled = true;
+            knn_man.IsEnabled = true;
+        }
         
     }
 }

@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="0" Margin="10,20,0,0" BorderBrush="#FF9DAFB8" BorderThickness="1" >
             <Grid x:Name="dane" Grid.Row="1" Grid.Column="0" Background="White" Opacity="0.7">
-                <DataGrid x:Name="blok" ItemsSource="{Binding dt}">
+                <DataGrid x:Name="blok" ItemsSource="{Binding dt}" Margin="250,-156,-250,156">
 
                 </DataGrid>
             </Grid>
@@ -69,7 +69,7 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="dyskr" Width="100" Grid.Column="0" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Dyskretyzacja zmiennych rzeczywistych" Click="dyskr_Click" >
+                            <Button x:Name="dyskr" Width="100" Grid.Column="0" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Dyskretyzacja zmiennych rzeczywistych" Click="dyskr_Click" IsEnabled="False" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -82,7 +82,7 @@
 
                         </Border>
                         <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="zm_klas" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zamiana danych tekstowych na numeryczne" Click="zm_klas_Click">
+                            <Button x:Name="zm_klas" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zamiana danych tekstowych na numeryczne" Click="zm_klas_Click" IsEnabled="False">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -94,7 +94,7 @@
                             </Button>
                         </Border>
                         <Border Grid.Column="2" BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
-                            <Button x:Name="wyb_nom" Width="100" Grid.Column="2"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Preferowanie najliczniejszych klas" Foreground="#FF7FB1BF" Click="wyb_nom_Click">
+                            <Button x:Name="wyb_nom" Width="100" Grid.Column="2"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Preferowanie najliczniejszych klas" Foreground="#FF7FB1BF" Click="wyb_nom_Click" IsEnabled="False">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -137,7 +137,7 @@
                             <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="norm" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Normalizacja zmiennych rzeczywistych" Click="norm_Click" >
+                            <Button x:Name="norm" Width="100" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Normalizacja zmiennych rzeczywistych" Click="norm_Click" IsEnabled="False" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -149,7 +149,7 @@
                             </Button>
                         </Border>
                         <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
-                            <Button x:Name="cos" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Click="cos_Click">
+                            <Button x:Name="cos" Width="100" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Click="cos_Click" IsEnabled="False">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -227,7 +227,7 @@
                                         </LinearGradientBrush>
                                     </ComboBox.Background>
                                 </ComboBox>
-                                <Button x:Name="rys_wykres" Grid.Row="3" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Rysuje wykres od podanych klas"  Click="rys_wykres_Click">
+                                <Button x:Name="rys_wykres" Grid.Row="3" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Rysuje wykres od podanych klas"  Click="rys_wykres_Click" IsEnabled="False">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="auto"/>
@@ -242,7 +242,7 @@
 
                         </Border>
                         <Border Grid.Column="1"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="knn" Width="60" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany"  Click="knn_Click" >
+                            <Button x:Name="knn" Width="60" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany"  Click="knn_Click" IsEnabled="False" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -254,7 +254,7 @@
 
                         </Border>
                         <Border Grid.Column="2"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="knn_man" Width="60"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany"  Click="knn_man_Click" Grid.Column="2">
+                            <Button x:Name="knn_man" Width="60"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany"  Click="knn_man_Click" Grid.Column="2" IsEnabled="False">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
@@ -265,7 +265,7 @@
                             </Button>
                         </Border>
                         <Border Grid.Column="3"  BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
-                            <Button x:Name="knn_lnies" Width="60"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Click="knn_lnie_Click" Grid.Column="3">
+                            <Button x:Name="knn_lnies" Width="60"  Background="{x:Null}" BorderBrush="{x:Null}" ToolTip="Zmiana wartości z przedziału min-max na przedział zdefiniowany" Click="knn_lnie_Click" Grid.Column="3" IsEnabled="False">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
