@@ -834,24 +834,29 @@ namespace SWD
 
         private void zapisz_Click(object sender, RoutedEventArgs e)
         {
-            //string file_name = "C:\\test1.txt";
+            
+            SaveFileDialog dialog = new SaveFileDialog();
+            Nullable<bool> result = dialog.ShowDialog();
+            dialog.Filter = "Text Files|*.txt";
 
-           // System.IO.StreamWriter objWriter;
-
-           // objWriter = new System.IO.StreamWriter(file_name);
-            using (StreamWriter sw = File.CreateText("lol.txt"))
+            if (result == true)
             {
-
-                foreach (DataRow row in daneTab.Rows)
+                using ( Stream s = File.Open(dialog.FileName+".txt", FileMode.CreateNew))
+                using (StreamWriter sw = new StreamWriter(s))
                 {
-                    foreach (DataColumn col in daneTab.Columns)
+                    foreach (DataRow row in daneTab.Rows)
                     {
-                        sw.Write(row[col].ToString()+" ");
+                        foreach (DataColumn col in daneTab.Columns)
+                        {
+                            sw.Write(row[col].ToString() + " ");
 
+                        }
+                        sw.WriteLine();
                     }
-                    sw.WriteLine();
                 }
             }
+
+            
         }
     }
 }
