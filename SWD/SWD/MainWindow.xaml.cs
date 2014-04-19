@@ -45,6 +45,7 @@ namespace SWD
             }
         }
 
+        
         private void wgraj_Click(object sender, RoutedEventArgs e)
         {
             listaKolumn = new List<List<object>>();
@@ -314,37 +315,44 @@ namespace SWD
         // Dyskretyzacja przedziały
         private void dyskr_Click(object sender, RoutedEventArgs e)
         {
-            int liczPrzedz = Int32.Parse(przedzial.Text);
-            double dlugosc;
-
-            double[] minMax = minmax();
-            double[] przedzialCur = new double[2];
-            
-            dlugosc = (minMax[1] - minMax[0]) / liczPrzedz;
-
-            przedzialCur[0] = minMax[0];
-            przedzialCur[1] = przedzialCur[0];
-
-            daneTab.Columns.Add("DYS_K" + wybor.SelectedIndex + "_P" + liczPrzedz, typeof(int));
-
-            for (int i = 0; i < liczPrzedz; i++)
+            if (przedzial.Text != "")
             {
-                if(i!=0)
-                    przedzialCur[0] += dlugosc;
-                przedzialCur[1] += dlugosc;
-                foreach (DataRow row in daneTab.Rows)
+                int liczPrzedz = Int32.Parse(przedzial.Text);
+                double dlugosc;
+
+                double[] minMax = minmax();
+                double[] przedzialCur = new double[2];
+
+                dlugosc = (minMax[1] - minMax[0]) / liczPrzedz;
+
+                przedzialCur[0] = minMax[0];
+                przedzialCur[1] = przedzialCur[0];
+
+                daneTab.Columns.Add("DYS_K" + wybor.SelectedIndex + "_P" + liczPrzedz, typeof(int));
+
+                for (int i = 0; i < liczPrzedz; i++)
                 {
-                    if ((double)row[wybor.SelectedIndex] >= przedzialCur[0] &&  (double)row[wybor.SelectedIndex] < przedzialCur[1])
+                    if (i != 0)
+                        przedzialCur[0] += dlugosc;
+                    przedzialCur[1] += dlugosc;
+                    foreach (DataRow row in daneTab.Rows)
                     {
-                        row[row.ItemArray.Length - 1] = i + 1;
+                        if ((double)row[wybor.SelectedIndex] >= przedzialCur[0] && (double)row[wybor.SelectedIndex] < przedzialCur[1])
+                        {
+                            row[row.ItemArray.Length - 1] = i + 1;
+                        }
+                        if (i == liczPrzedz - 1 && (double)row[wybor.SelectedIndex] == minMax[1])
+                            row[row.ItemArray.Length - 1] = i + 1;
                     }
-                    if(i==liczPrzedz-1 && (double)row[wybor.SelectedIndex] == minMax[1])
-                        row[row.ItemArray.Length - 1] = i + 1;
+
                 }
-                
+                blok.ItemsSource = daneTab.AsDataView();
+                odswiezlisty();
             }
-            blok.ItemsSource = daneTab.AsDataView();
-            odswiezlisty();
+            else
+            {
+                MessageBox.Show("wpisz wartosc");
+            }
         }
         // lista object na lista double
         private List<Double> castToDouble(List<object> toCast)
@@ -431,39 +439,46 @@ namespace SWD
 
             List<object> list = doListy();
 
-
-            int ileKlas = Int32.Parse(przedzial.Text);
-            
-            //var g = list.GroupBy(z => z);
-            var licz = 
-                from k in list 
-                group k by k into g 
-                select new { klucz = g.Key, count= g.Count() };
-
-            var sorted =
-                from k in licz
-                orderby k.count descending
-                select k;
-
-            //licz.OrderByDescending(k => k.count);
-
-            daneTab.Columns.Add("DYSNUM_K" + (wybor.SelectedIndex +1) + "_N" + ileKlas, typeof(int));
-            int i = 0;
-            foreach ( var s in sorted)
+            if (przedzial.Text != "")
             {
-                i++;
-                if (i > ileKlas)
-                    i = ileKlas;
-                foreach (DataRow row in daneTab.Rows)
+                int ileKlas = Int32.Parse(przedzial.Text);
+
+                //var g = list.GroupBy(z => z);
+                var licz =
+                    from k in list
+                    group k by k into g
+                    select new { klucz = g.Key, count = g.Count() };
+
+                var sorted =
+                    from k in licz
+                    orderby k.count descending
+                    select k;
+
+                //licz.OrderByDescending(k => k.count);
+
+                daneTab.Columns.Add("DYSNUM_K" + (wybor.SelectedIndex + 1) + "_N" + ileKlas, typeof(int));
+                int i = 0;
+                foreach (var s in sorted)
                 {
-                    //i = wyst.FindIndex(x => x.Equals(row[wybor.SelectedIndex]));
-                    if ( row[wybor.SelectedIndex].Equals(s.klucz))
-                        row[row.ItemArray.Length - 1] = i;
+                    i++;
+                    if (i > ileKlas)
+                        i = ileKlas;
+                    foreach (DataRow row in daneTab.Rows)
+                    {
+                        //i = wyst.FindIndex(x => x.Equals(row[wybor.SelectedIndex]));
+                        if (row[wybor.SelectedIndex].Equals(s.klucz))
+                            row[row.ItemArray.Length - 1] = i;
+                    }
                 }
-            } 
+
+                blok.ItemsSource = daneTab.AsDataView();
+                odswiezlisty();
+            }
+            else
+            {
+                MessageBox.Show("Wpisz wartość");
+            }
             
-            blok.ItemsSource = daneTab.AsDataView();
-            odswiezlisty();
         }
 
         //Rysowanie
@@ -506,20 +521,29 @@ namespace SWD
 
         private void cos_Click(object sender, RoutedEventArgs e)
         {
-            double newMin = Double.Parse(norm_przed.Text);
-            double newMax = Double.Parse(norm_przed2.Text);
-
-            double min = minmax()[0];  
-            double max = minmax()[1];
-
-            daneTab.Columns.Add("NORM_K" + (wybor.SelectedIndex +1) + "MIN" + newMin + "MAX" + newMax, typeof(Double));
-
-            foreach (DataRow r in daneTab.Rows)
+            if (norm_przed.Text != "" && norm_przed2.Text != "")
             {
-                r[r.ItemArray.Count() - 1] = ((((double)r[wybor.SelectedIndex] - min) / (max - min)) * (newMax - newMin)) + newMin;
+                double newMin = Double.Parse(norm_przed.Text);
+                double newMax = Double.Parse(norm_przed2.Text);
+
+                double min = minmax()[0];
+                double max = minmax()[1];
+
+                daneTab.Columns.Add("NORM_K" + (wybor.SelectedIndex + 1) + "MIN" + newMin + "MAX" + newMax, typeof(Double));
+
+                foreach (DataRow r in daneTab.Rows)
+                {
+                    r[r.ItemArray.Count() - 1] = ((((double)r[wybor.SelectedIndex] - min) / (max - min)) * (newMax - newMin)) + newMin;
+                }
+                blok.ItemsSource = daneTab.AsDataView();
+                odswiezlisty();
             }
-            blok.ItemsSource = daneTab.AsDataView();
-            odswiezlisty();
+            else
+            {
+                MessageBox.Show("Wpisz wartość");
+            }
+
+            
         }
 
         private List<List<Double>> przepiszListe()
@@ -855,8 +879,8 @@ namespace SWD
                     }
                 }
             }
-
-            
         }
+
+        
     }
 }
