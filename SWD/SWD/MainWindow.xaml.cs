@@ -50,6 +50,7 @@ namespace SWD
         {
             listaKolumn = new List<List<object>>();
             daneTab = new DataTable();
+            naglowki = null;
             try
             {
                 OpenFileDialog dlg = new OpenFileDialog();
@@ -79,7 +80,7 @@ namespace SWD
                         }
 
                         int j = 0;
-                        // foreach dla każdego stringa wydzielonego z jednej przeczytaniej linii, stringa dzieli spacja lub przecinek
+                        // foreach dla każdego stringa wydzielonego z jednej przeczytaniej linii, stringa dzieli spacja, tabulator lub przecinek
                         foreach (string l in k.Split(new char[] { ' ', '\t' , ';'}))
                         {
                             // dodanie list reprezentujących kolumny, jednorazowo przy pierwszej iteracji
