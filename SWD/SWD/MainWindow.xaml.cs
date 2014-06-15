@@ -26,6 +26,11 @@ namespace SWD
         public MainWindow()
         {
             InitializeComponent();
+            wybor_grupowanie.Items.Add(new ItemObject("Euklides", 0));
+            wybor_grupowanie.Items.Add(new ItemObject("Manhattan", 0));
+            wybor_grupowanie.Items.Add(new ItemObject("Lnieskonczonosc", 0));
+            wybor_grupowanie.Items.Add(new ItemObject("Mahalanobis", 0));
+            wybor_grupowanie.SelectedIndex = 0;
         }
 
         public class ItemObject
@@ -144,6 +149,7 @@ namespace SWD
                     wybor.Items.Clear();
                     wybor_chart1.Items.Clear();
                     wybor_chart2.Items.Clear();
+                    wybor_chart_klasa.Items.Clear();
 
                     int z = 0;
                     foreach (var x in daneTab.Columns)
@@ -158,6 +164,7 @@ namespace SWD
                     wybor.SelectedIndex = 0;
                     wybor_chart1.SelectedIndex = 0;
                     wybor_chart2.SelectedIndex = 0;
+                    wybor_chart_klasa.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
@@ -924,6 +931,8 @@ namespace SWD
 
         private void kmedi_but_Click(object sender, RoutedEventArgs e)
         {
+
+
 
         }
         

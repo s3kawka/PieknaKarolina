@@ -289,13 +289,25 @@
                         </Grid.RowDefinitions>
                         <Border Grid.Row="1">
                             <Grid Background="#FF7FB1BF">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <TextBox x:Name="cosaaaa" Width="50" BorderThickness="0,1,0,0" Margin="0,0,5,0"/>
-                                    
-                                </StackPanel>
-                            </Grid>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="center">
+                                <TextBox x:Name="k_grupowanie" Width="50" BorderThickness="0,1,0,0" Margin="0,0,5,0"/>
+                                <ComboBox x:Name="wybor_grupowanie"  Grid.Row="0"  IsEditable="True" IsReadOnly="True" Text="WYBIERZ KOLUMNĘ" Foreground="#FF08274B" SelectionChanged="wybor_SelectionChanged" FontSize="10" BorderThickness="0,0,0,1" Margin="0,0">
+                                    <ComboBox.Background>
+                                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                            <GradientStop Color="White" Offset="0"/>
+                                            <GradientStop Color="#FFEBEBEB" Offset="0.309"/>
+                                            <GradientStop Color="#FFDDDDDD" Offset="0.515"/>
+                                            <GradientStop Color="#FF7A9EA8" Offset="0.837"/>
+                                            <GradientStop Color="#FF14B682" Offset="0.996"/>
+                                        </LinearGradientBrush>
+                                    </ComboBox.Background>
+
+                                </ComboBox>
+                            </StackPanel>
+                            
+                        </Grid>
                         </Border>
-                        <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF327583" >COS</Label>
+                        <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF327583" Height="16" Margin="76,0" VerticalAlignment="Top" >GRUPOWANIE</Label>
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
