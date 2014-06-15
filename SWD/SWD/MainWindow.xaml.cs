@@ -212,6 +212,15 @@ namespace SWD
             catch (InvalidCastException ex)
             {
                 text_średnia.Text = "Nie liczbowa kolumna";
+                text_mediana.Text = "";
+                text_minmax1.Text = "";
+                text_minmax2.Text ="";
+                text_kw1.Text = "";
+                text_kw2.Text = "";
+                text_p1.Text = "";
+                text_p2.Text = "";
+                text_p3.Text = "";
+                text_p4.Text = "";
                 //throw;
             }
         }
@@ -511,14 +520,21 @@ namespace SWD
             double odchylenie = Math.Sqrt(wariancja());
             double avg = srednia();
 
-            daneTab.Columns.Add("NORM_K" + wybor.SelectedIndex, typeof(Double));
-
-            foreach (DataRow r in daneTab.Rows)
+            try
             {
-                r[r.ItemArray.Length -1] = (((double)r[wybor.SelectedIndex] - avg) / odchylenie);
+                daneTab.Columns.Add("NORM_K" + wybor.SelectedIndex, typeof(Double));
+
+                foreach (DataRow r in daneTab.Rows)
+                {
+                    r[r.ItemArray.Length - 1] = (((double)r[wybor.SelectedIndex] - avg) / odchylenie);
+                }
+                blok.ItemsSource = daneTab.AsDataView();
+                odswiezlisty();
             }
-            blok.ItemsSource = daneTab.AsDataView();
-            odswiezlisty();
+            catch (DuplicateNameException ex)
+            {
+                MessageBox.Show("Już wykonałeś tą operację, dane w kolumnie " + "NORM_K" + wybor.SelectedIndex);
+            }
         }
 
         private void cos_Click(object sender, RoutedEventArgs e)

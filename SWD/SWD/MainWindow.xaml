@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="0" Margin="10,20,0,0" BorderBrush="#FF9DAFB8" BorderThickness="1" >
             <Grid x:Name="dane" Grid.Row="1" Grid.Column="0" Background="White" Opacity="0.7">
-                <DataGrid x:Name="blok" ItemsSource="{Binding dt}">
+                <DataGrid x:Name="blok" ItemsSource="{Binding dt}" Margin="250,-156,-250,156">
 
                 </DataGrid>
             </Grid>
