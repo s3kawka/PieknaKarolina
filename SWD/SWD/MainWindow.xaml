@@ -280,8 +280,39 @@
                 </Grid>
             </Border>
             <Border Grid.Column="4" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,1" Background="{x:Null}">
-                <Label></Label>
-            </Border>
+                
+                    <Grid x:Name="aaaaa">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="20"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="1">
+                            <Grid Background="#FF7FB1BF">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBox x:Name="cosaaaa" Width="50" BorderThickness="0,1,0,0" Margin="0,0,5,0"/>
+                                    
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Label Background="{x:Null}" Grid.Row="0" HorizontalAlignment="Center" Padding="0" Foreground="#FF327583" >COS</Label>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
+                            <Button x:Name="cos1" Content="k-srednich" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}"  IsEnabled="False" ></Button>
+                            </Border>
+                            <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
+                            <Button x:Name="cos2" Content="k-mediodow" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"></Button>
+                            </Border>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            
 
 
 
