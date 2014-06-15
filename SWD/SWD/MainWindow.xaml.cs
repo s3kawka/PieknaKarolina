@@ -909,6 +909,22 @@ namespace SWD
             knn.IsEnabled = true;
             knn_lnies.IsEnabled = true;
             knn_man.IsEnabled = true;
+            ksred_but.IsEnabled = true;
+            kmedi_but.IsEnabled = true;
+        }
+
+        private void ksred_but_Click(object sender, RoutedEventArgs e)
+        {
+            //1 wybieram k punktów
+            //2 przydzielam klasy euk/mah/lnies
+            //3 licze srednia/mediane po wszystkich punktach
+            //4 ustawiam nowe punkty
+            //go to 2
+        }
+
+        private void kmedi_but_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         
     }

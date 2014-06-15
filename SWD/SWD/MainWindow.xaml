@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="0" Margin="10,20,0,0" BorderBrush="#FF9DAFB8" BorderThickness="1" >
             <Grid x:Name="dane" Grid.Row="1" Grid.Column="0" Background="White" Opacity="0.7">
-                <DataGrid x:Name="blok" ItemsSource="{Binding dt}" Margin="250,-156,-250,156">
+                <DataGrid x:Name="blok" ItemsSource="{Binding dt}">
 
                 </DataGrid>
             </Grid>
@@ -303,10 +303,10 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" BorderBrush="#FF9DAFB8" BorderThickness="0,1,1,0">
-                            <Button x:Name="cos1" Content="k-srednich" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}"  IsEnabled="False" ></Button>
+                            <Button x:Name="ksred_but" Content="k-srednich" Grid.Column="0"  Background="{x:Null}" BorderBrush="{x:Null}"  IsEnabled="False" Click="ksred_but_Click" ></Button>
                             </Border>
                             <Border Grid.Column="1" BorderBrush="#FF9DAFB8" BorderThickness="0,1,0,0">
-                            <Button x:Name="cos2" Content="k-mediodow" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False"></Button>
+                            <Button x:Name="kmedi_but" Content="k-mediodow" Grid.Column="1"  Background="{x:Null}" BorderBrush="{x:Null}" IsEnabled="False" Click="kmedi_but_Click"></Button>
                             </Border>
                         </Grid>
 
