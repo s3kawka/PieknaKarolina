@@ -194,6 +194,7 @@ namespace SWD
             wybor.SelectedIndex = 0;
             wybor_chart1.SelectedIndex = 0;
             wybor_chart2.SelectedIndex = 0;
+            wybor_chart_klasa.SelectedIndex = 0;
         }
 
         private void wybor_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -614,7 +615,7 @@ namespace SWD
                 }
                 odleglosc.Sort(ckv);
                 string curClass = daneTab.Rows[i].ItemArray[daneTab.Columns.Count-1].ToString();
-                int dobre=0;
+                
                 for (int h = 1; h < list.Count - 1; h++)
                 {
                     //foreach (KeyValuePair<string, double> kv in odleglosc.Take(h))
@@ -674,7 +675,7 @@ namespace SWD
                 }
                 odleglosc.Sort(ckv);
                 string curClass = daneTab.Rows[i].ItemArray[daneTab.Columns.Count - 1].ToString();
-                int dobre = 0;
+               
                 for (int h = 1; h < list.Count - 1; h++)
                 {
                     //foreach (KeyValuePair<string, double> kv in odleglosc.Take(h))
@@ -734,7 +735,7 @@ namespace SWD
                 }
                 odleglosc.Sort(ckv);
                 string curClass = daneTab.Rows[i].ItemArray[daneTab.Columns.Count - 1].ToString();
-                int dobre = 0;
+               
                 for (int h = 1; h < list.Count - 1; h++)
                 {
                     //foreach (KeyValuePair<string, double> kv in odleglosc.Take(h))
@@ -805,7 +806,7 @@ namespace SWD
                 }
                 odleglosc.Sort(ckv);
                 string curClass = daneTab.Rows[i].ItemArray[daneTab.Columns.Count - 1].ToString();
-                int dobre = 0;
+               
                 for (int h = 1; h < list.Count - 1; h++)
                 {
                     cnt++;
@@ -850,6 +851,11 @@ namespace SWD
         static int ckv(KeyValuePair<string, double> a, KeyValuePair<string, double> b)
         {
             return a.Value.CompareTo(b.Value);
+        }
+
+        static int dobles(double a, double b)
+        {
+            return a.CompareTo(b);
         }
 
         private void knn_man_Click(object sender, RoutedEventArgs e)
@@ -922,19 +928,418 @@ namespace SWD
 
         private void ksred_but_Click(object sender, RoutedEventArgs e)
         {
-            //1 wybieram k punktów
-            //2 przydzielam klasy euk/mah/lnies
-            //3 licze srednia/mediane po wszystkich punktach
-            //4 ustawiam nowe punkty
-            //go to 2
+            int liczbakolumn = Int32.Parse(k_grupowanie_kolumny.Text);
+            int k = Int32.Parse(k_grupowanie.Text);
+            double[][] punkty = new double[k][];
+            for (int i = 0; i < k; i++)
+                punkty[i] = new Double[liczbakolumn];
+            double[][] daneP = przepiszNaTabliceJ(liczbakolumn);
+            int[] tablicaKlas = new int[daneTab.Rows.Count];
+            double min = double.MaxValue;
+            int odleglosc = wybor_grupowanie.SelectedIndex;
+            int[] ileDanejKlasy = new int[k];
+            double[][] domedian = new double[liczbakolumn][];
+            int ileZmian = 0;
+            int poprzednieZmiany = 0;
+            int petla = 0;
+            int ogol = 0;
+            double[,] cov = macierzKowDoMah(liczbakolumn);
+
+            Random r = new Random();
+            for (int i = 0; i < k; i++)
+            {
+                int n = r.Next(daneTab.Rows.Count);
+                for (int j = 0; j < liczbakolumn; j++)
+                {
+                    punkty[i][j] = daneP[n][j];
+                }
+            }
+            bool term = true;
+            while (term)
+            {
+                ileDanejKlasy = new int[k];
+                for (int i = 0; i < daneP.Length; i++)
+                {
+                    if (odleglosc == 0)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Euclidean(daneP[i], punkty[j]);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
+
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                    else if (odleglosc == 1)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Manhattan(daneP[i], punkty[j]);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
+
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                    else if (odleglosc == 2)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Chebyshev(daneP[i], punkty[j]);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
+
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                    else if (odleglosc == 3)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Mahalanobis(daneP[i], punkty[j], cov);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
+
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                }
+                for (int i = 0; i < k; i++)
+                {
+                    for (int d = 0; d < liczbakolumn; d++)
+                        domedian[d] = new double[ileDanejKlasy[i]];
+
+                    int m = 0;
+                    for (int j = 0; j < daneP.Length; j++)
+                    {
+                        if (tablicaKlas[j] == i)
+                        {
+                            for (int l = 0; l < liczbakolumn; l++)
+                            {
+                                domedian[l][m] = daneP[j][l];
+                            }
+                            m++;
+                        }
+                    }
+                    for (int l = 0; l < liczbakolumn; l++)
+                    {
+                        try
+                        {
+                            punkty[i][l] = Accord.Statistics.Tools.Mean(domedian[l]);
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
+                ogol++;
+                if (ileZmian == poprzednieZmiany)
+                {
+                    petla++;
+                }
+                else
+                {
+                    poprzednieZmiany = ileZmian;
+                    petla = 0;
+                }
+                ileZmian = 0;
+                if (petla == 20)
+                {
+                    term = false;
+                }
+                if (ogol == 400)
+                {
+                    term = false;
+                }
+            }
+            daneTab.Columns.Add(k + "SRE" + "_MET" + odleglosc, typeof(Double));
+            int u = 0;
+            foreach (DataRow row in daneTab.Rows)
+            {
+                row[row.ItemArray.Count() - 1] = tablicaKlas[u];
+                u++;
+            }
+            blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }
+
 
         private void kmedi_but_Click(object sender, RoutedEventArgs e)
         {
+            int liczbakolumn = Int32.Parse(k_grupowanie_kolumny.Text);
+            int k = Int32.Parse(k_grupowanie.Text);
+            double[][] punkty = new double[k][];
+            for(int i=0;i<k;i++)
+                punkty[i] = new Double[liczbakolumn];
+            double[][] daneP = przepiszNaTabliceJ(liczbakolumn);
+            int[] tablicaKlas = new int[daneTab.Rows.Count];
+            double min = double.MaxValue;
+            int odleglosc = wybor_grupowanie.SelectedIndex;
+            int[] ileDanejKlasy = new int[k];
+            double[][] domedian = new double[liczbakolumn][];
+            int ileZmian = 0;
+            int poprzednieZmiany = 0;
+            int petla=0;
+            int ogol=0;
+            double[,] cov = macierzKowDoMah(liczbakolumn);
 
+            Random r = new Random();
+            for (int i = 0; i < k; i++)
+            {
+                int n = r.Next(daneTab.Rows.Count);
+                for (int j = 0; j < liczbakolumn; j++)
+                {
+                    punkty[i][j] = daneP[n][j];
+                }
+            }
+            bool term = true;
+            while (term)
+            {
+                ileDanejKlasy = new int[k];
+                for (int i = 0; i < daneP.Length; i++)
+                {
+                    if (odleglosc == 0)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Euclidean(daneP[i], punkty[j]);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
+                            
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                    else if (odleglosc == 1)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Manhattan(daneP[i], punkty[j]);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
 
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                    else if (odleglosc == 2)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Chebyshev(daneP[i], punkty[j]);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
 
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                    else if (odleglosc == 3)
+                    {
+                        int temp = tablicaKlas[i];
+                        for (int j = 0; j < k; j++)
+                        {
+                            double tmp = Distance.Mahalanobis(daneP[i], punkty[j], cov);
+                            if (tmp < min)
+                            {
+                                min = tmp;
+                                tablicaKlas[i] = j;
+                            }
+
+                        }
+                        if (temp != tablicaKlas[i])
+                        {
+                            ileZmian++;
+                        }
+                        ileDanejKlasy[tablicaKlas[i]]++;
+                        min = double.MaxValue;
+                    }
+                }
+                for (int i = 0; i < k; i++)
+                {
+                    for (int d = 0; d < liczbakolumn; d++)
+                        domedian[d] = new double[ileDanejKlasy[i]];
+
+                    int m = 0;
+                    for (int j = 0; j < daneP.Length; j++)
+                    {
+                        if (tablicaKlas[j] == i)
+                        {
+                            for (int l = 0; l < liczbakolumn; l++)
+                            {
+                                domedian[l][m] = daneP[j][l];
+                            }
+                            m++;
+                        }
+                    }
+                    for (int l = 0; l < liczbakolumn; l++)
+                    {
+                        try
+                        {
+                            punkty[i][l] = Accord.Statistics.Tools.Median(domedian[l]);
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
+                ogol++;
+                if (ileZmian == poprzednieZmiany)
+                {
+                    petla++;
+                }
+                else
+                {
+                    poprzednieZmiany = ileZmian;
+                    petla = 0;
+                }
+                ileZmian = 0;
+                if (petla == 20)
+                {
+                    term = false;
+                }
+                if (ogol == 400)
+                {
+                    term = false;
+                }
+            }
+            daneTab.Columns.Add(k +"MED"+"_MET"+odleglosc, typeof(Double));
+            int u = 0;
+            foreach (DataRow row in daneTab.Rows)
+            {
+                row[row.ItemArray.Count() - 1] = tablicaKlas[u];
+                u++;
+            }
+            blok.ItemsSource = daneTab.AsDataView();
+            odswiezlisty();
         }
-        
+
+        //public double med(double[] tab)
+        //{
+        //    Array.Sort(tab, dobles);
+        //    double mediana;
+        //    if (tab.Length % 2 == 0)
+        //    {
+        //        mediana = (tab[(tab.Length / 2) - 1] + tab[tab.Length / 2]) / 2;  //((Double)listaKolumn[wybor.SelectedIndex][a - 1] + (Double)listaKolumn[wybor.SelectedIndex][a]) / 2;
+        //    }
+        //    else
+        //    {
+        //        mediana = tab[(tab.Length / 2) - 1];
+        //    }
+
+        //    return mediana;
+        //}
+
+        private double[,] przepiszNaTablice(int liczbaKolumn)
+        {
+            double[,] nowa = new double[daneTab.Rows.Count, liczbaKolumn + 1];
+            int j = 0;
+            foreach (DataRow r in daneTab.Rows)
+            {
+                for (int i = liczbaKolumn; i < liczbaKolumn; i++)
+                {
+                    nowa[j, i] = Double.Parse(r.ItemArray[i].ToString());
+                }
+                j++;
+            }
+
+            return nowa;
+        }
+
+        private double[,] macierzKowDoMah(int liczbakolumn)
+        {
+            double[][] nowa = przepiszNaTabliceJ(liczbakolumn);
+            int x = nowa.Length; int y = nowa[0].Length;
+            double[,] dnowa = new double[x,y];
+            
+            for(int i=0;i<x;i++)
+                for (int j = 0; j < y; j++)
+                {
+                    dnowa[i, j] = nowa[i][j];
+                }
+            return Accord.Math.Matrix.Inverse(Accord.Statistics.Tools.Covariance(dnowa));
+        }
+
+        private double[][] przepiszNaTabliceJ(int liczbakolumn)
+        {
+            double[][] nowa = new double[daneTab.Rows.Count][];
+            for (int i = 0; i < daneTab.Rows.Count;i++)
+            {
+                nowa[i] = new double[liczbakolumn];
+            }
+            int j = 0;
+            foreach (DataRow r in daneTab.Rows)
+            {
+                for (int i = 0; i < liczbakolumn; i++)
+                {
+                    nowa[j][i] = Double.Parse(r.ItemArray[i].ToString());
+                }
+                j++;
+            }
+            return nowa;
+        }        
     }
 }
